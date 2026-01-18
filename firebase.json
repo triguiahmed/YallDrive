@@ -1,0 +1,35 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "carrentalapp-33363",
+          "appId": "1:1069914349598:android:cd3556bc69106d7df80e0f",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "carrentalapp-33363",
+          "configurations": {
+            "android": "1:1069914349598:android:cd3556bc69106d7df80e0f",
+            "web": "1:1069914349598:web:d54f6293f635f98af80e0f"
+          }
+        }
+      }
+    }
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ]
+    }
+  ]
+}
