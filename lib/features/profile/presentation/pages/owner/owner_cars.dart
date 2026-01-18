@@ -33,7 +33,6 @@ class _OwnerHomeState extends State<OwnerHome> {
   @override
   Widget build(BuildContext context) {
     final dummyFeedbacks = [
-    [
       'Great service! The car was in excellent condition.',
       'Smooth booking process and friendly staff.',
       'Had a minor issue, but support resolved it quickly.',
