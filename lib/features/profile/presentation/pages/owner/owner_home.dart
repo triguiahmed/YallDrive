@@ -33,10 +33,26 @@ class _OwnerHomeState extends State<OwnerHome> {
   @override
   Widget build(BuildContext context) {
     final dummyFeedbacks = [
-      'Great service! The car was in excellent condition.',
-      'Smooth booking process and friendly staff.',
-      'Had a minor issue, but support resolved it quickly.',
-      'Highly recommend this platform for car rentals.',
+      {
+        'text': 'Great service! The car was in excellent condition.',
+        'author': 'Ahmed M.',
+        'rating': 5,
+      },
+      {
+        'text': 'Smooth booking process and friendly staff.',
+        'author': 'Sara K.',
+        'rating': 5,
+      },
+      {
+        'text': 'Had a minor issue, but support resolved it quickly.',
+        'author': 'Mohamed A.',
+        'rating': 4,
+      },
+      {
+        'text': 'Highly recommend this platform for car rentals.',
+        'author': 'Leila B.',
+        'rating': 5,
+      },
     ];
 
     return ScaffoldPage(
@@ -59,73 +75,236 @@ class _OwnerHomeState extends State<OwnerHome> {
             noOfCars = state.cars.length;
           }
 
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  color: AppPallete.gradient3.withAlpha(220),
-                  child: Padding(
-                    padding: EdgeInsets.all(20.0),
-                    child: Center(
-                      child: Text(
-                        'Registred Cars: $noOfCars',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
+          return Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  AppPallete.gradient3.withOpacity(0.1),
+                  Colors.white,
+                ],
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  // Stats Card with Gradient
+                  Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          AppPallete.gradient3,
+                          AppPallete.gradient2,
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppPallete.gradient3.withOpacity(0.3),
+                          blurRadius: 15,
+                          offset: Offset(0, 8),
                         ),
-                      ),
+                      ],
                     ),
-                  ),
-                ),
-                SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(
-                      context,
-                      AppRoutes.registerForm,
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppPallete.backgroundColor,
-                    padding: EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  child: Text(
-                    'Register New Car',
-                    style: TextStyle(fontSize: 18, color: Colors.white),
-                  ),
-                ),
-                SizedBox(height: 20),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: dummyFeedbacks.length,
-                    itemBuilder: (context, index) => Card(
-                      margin: EdgeInsets.symmetric(vertical: 8),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      color: Colors.white.withAlpha(200),
-                      child: Padding(
-                        padding: EdgeInsets.all(16.0),
-                        child: Text(
-                          dummyFeedbacks[index],
-                          style: TextStyle(
-                            fontSize: 16,
+                    child: Padding(
+                      padding: EdgeInsets.all(24.0),
+                      child: Column(
+                        children: [
+                          Icon(
+                            Icons.directions_car,
+                            color: Colors.white,
+                            size: 48,
                           ),
-                        ),
+                          SizedBox(height: 12),
+                          Text(
+                            '$noOfCars',
+                            style: TextStyle(
+                              fontSize: 48,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Text(
+                            'Registered Cars',
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.white.withOpacity(0.9),
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                ),
-              ],
+                  SizedBox(height: 24),
+                  
+                  // Register New Car Button
+                  Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          AppPallete.gradient1,
+                          AppPallete.gradient2,
+                        ],
+                      ),
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppPallete.gradient2.withOpacity(0.3),
+                          blurRadius: 12,
+                          offset: Offset(0, 6),
+                        ),
+                      ],
+                    ),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(
+                          context,
+                          AppRoutes.registerForm,
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.transparent,
+                        shadowColor: Colors.transparent,
+                        padding: EdgeInsets.symmetric(vertical: 18),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.add_circle_outline, color: Colors.white),
+                          SizedBox(width: 8),
+                          Text(
+                            'Register New Car',
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 28),
+                  
+                  // Feedbacks Section Header
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.star_rounded,
+                        color: AppPallete.gradient3,
+                        size: 28,
+                      ),
+                      SizedBox(width: 8),
+                      Text(
+                        'Customer Feedbacks',
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: AppPallete.gradient3,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 16),
+                  
+                  // Feedbacks List
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: dummyFeedbacks.length,
+                      itemBuilder: (context, index) {
+                        final feedback = dummyFeedbacks[index];
+                        return Container(
+                          margin: EdgeInsets.only(bottom: 16),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(
+                              color: AppPallete.gradient3.withOpacity(0.2),
+                              width: 1,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: AppPallete.gradient3.withOpacity(0.08),
+                                blurRadius: 10,
+                                offset: Offset(0, 4),
+                              ),
+                            ],
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.all(18.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    CircleAvatar(
+                                      backgroundColor: AppPallete.gradient3.withOpacity(0.1),
+                                      child: Text(
+                                        feedback['author'].toString()[0],
+                                        style: TextStyle(
+                                          color: AppPallete.gradient3,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(width: 12),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            feedback['author'].toString(),
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black87,
+                                            ),
+                                          ),
+                                          SizedBox(height: 4),
+                                          Row(
+                                            children: List.generate(
+                                              5,
+                                              (starIndex) => Icon(
+                                                starIndex < (feedback['rating'] as int)
+                                                    ? Icons.star
+                                                    : Icons.star_border,
+                                                color: Colors.amber,
+                                                size: 18,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 12),
+                                Text(
+                                  feedback['text'].toString(),
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.black87,
+                                    height: 1.4,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
           );
         },

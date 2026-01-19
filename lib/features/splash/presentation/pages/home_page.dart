@@ -28,7 +28,7 @@ class HomePage extends StatelessWidget {
                   vertical: 30,
                 ),
                 child: Text(
-                  'Find your drive',
+                  'Welcome to YallaDrive',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 28,
@@ -69,7 +69,7 @@ class HomePage extends StatelessWidget {
                         buttonColor: AppPallete.whiteColor,
                       ),
                     ),
-                    SizedBox(height: 50),
+                    SizedBox(height: 50, width: 200),
                   ],
                 ),
               ),

@@ -1,5 +1,6 @@
 import 'package:car_rental_app_clean_arch/core/common/cubits/app_user/app_user_cubit.dart';
 import 'package:car_rental_app_clean_arch/core/common/widgets/loader.dart';
+import 'package:car_rental_app_clean_arch/core/theme/app_pallete.dart';
 import 'package:car_rental_app_clean_arch/core/utils/show_snackerbar.dart';
 import 'package:car_rental_app_clean_arch/features/booking/domain/entites/booking.dart';
 import 'package:car_rental_app_clean_arch/features/booking/presentation/bloc/booking_bloc.dart';
@@ -55,103 +56,299 @@ class _OwnerCarsState extends State<OwnerCars> {
       bottomNavItems: Owner.bottomNavbarItems,
       routes: Owner.routes,
       title: 'Your Cars',
-      child: MultiBlocListener(
-        listeners: [
-          BlocListener<ProfileBloc, ProfileState>(
-            listener: (context, state) {
-              if (state is ProfileFailure) {
-                showSnackerbar(context, state.message);
-              }
-              if (state is ProfileOwnerCarsSuccess) {
-                setState(() {
-                  cars = state.cars;
-                });
-              }
-            },
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              AppPallete.gradient3.withOpacity(0.1),
+              Colors.white,
+            ],
           ),
-          BlocListener<BookingBloc, BookingState>(
-            listener: (context, state) {
-              if (state is BookingSuccessListBooking) {
-                setState(() {
-                  bookings = state.bookings;
-                });
+        ),
+        child: MultiBlocListener(
+          listeners: [
+            BlocListener<ProfileBloc, ProfileState>(
+              listener: (context, state) {
+                if (state is ProfileFailure) {
+                  showSnackerbar(context, state.message);
+                }
+                if (state is ProfileOwnerCarsSuccess) {
+                  setState(() {
+                    cars = state.cars;
+                  });
+                }
+              },
+            ),
+            BlocListener<BookingBloc, BookingState>(
+              listener: (context, state) {
+                if (state is BookingSuccessListBooking) {
+                  setState(() {
+                    bookings = state.bookings;
+                  });
+                }
+              },
+            ),
+          ],
+          child: BlocBuilder<ProfileBloc, ProfileState>(
+            builder: (context, state) {
+              if (state is ProfileLoading) {
+                return const Loader();
               }
-            },
-          ),
-        ],
-        child: BlocBuilder<ProfileBloc, ProfileState>(
-          builder: (context, state) {
-            if (state is ProfileLoading) {
-              return const Loader();
-            }
 
-            if (cars.isEmpty) {
-              return const Center(child: Text('No cars available.'));
-            }
-
-            return ListView.builder(
-              itemCount: cars.length,
-              itemBuilder: (context, index) {
-                final car = cars[index];
-                final bool isBooked = _isCarBooked(car.carNumber);
-
-                return Card(
-                  margin: const EdgeInsets.all(10.0),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
+              if (cars.isEmpty) {
+                return Center(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      ClipRRect(
-                        borderRadius: const BorderRadius.vertical(
-                            top: Radius.circular(15.0)),
-                        child: Image.network(
-                          car.carUrl,
-                          height: 180,
-                          width: double.infinity,
-                          fit: BoxFit.cover,
+                      Icon(
+                        Icons.garage_outlined,
+                        size: 80,
+                        color: AppPallete.gradient3.withOpacity(0.5),
+                      ),
+                      SizedBox(height: 16),
+                      Text(
+                        'No Cars Available',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.grey[600],
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(car.carName,
-                                style: const TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                )),
-                            const SizedBox(height: 5),
-                            Text(car.location,
-                                style: const TextStyle(color: Colors.grey)),
-                            const SizedBox(height: 10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  '${car.pricePerDay}TND/day',
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Icon(
-                                  isBooked ? Icons.lock : Icons.directions_car,
-                                  color: isBooked ? Colors.red : Colors.green,
-                                ),
-                              ],
-                            ),
-                          ],
+                      SizedBox(height: 8),
+                      Text(
+                        'Register your first car to get started',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey[500],
                         ),
                       ),
                     ],
                   ),
                 );
-              },
-            );
-          },
+              }
+
+              return ListView.builder(
+                padding: const EdgeInsets.all(16.0),
+                itemCount: cars.length,
+                itemBuilder: (context, index) {
+                  final car = cars[index];
+                  final bool isBooked = _isCarBooked(car.carNumber);
+
+                  return Container(
+                    margin: const EdgeInsets.only(bottom: 20.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppPallete.gradient3.withOpacity(0.15),
+                          blurRadius: 15,
+                          offset: Offset(0, 5),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Car Image with Status Badge
+                        Stack(
+                          children: [
+                            ClipRRect(
+                              borderRadius: const BorderRadius.vertical(
+                                top: Radius.circular(20.0),
+                              ),
+                              child: Image.network(
+                                car.carUrl,
+                                height: 200,
+                                width: double.infinity,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            // Status Badge
+                            Positioned(
+                              top: 12,
+                              right: 12,
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                  vertical: 8,
+                                ),
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: isBooked
+                                        ? [Colors.red.shade400, Colors.red.shade600]
+                                        : [Colors.green.shade400, Colors.green.shade600],
+                                  ),
+                                  borderRadius: BorderRadius.circular(20),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.2),
+                                      blurRadius: 8,
+                                      offset: Offset(0, 2),
+                                    ),
+                                  ],
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(
+                                      isBooked ? Icons.lock : Icons.check_circle,
+                                      color: Colors.white,
+                                      size: 18,
+                                    ),
+                                    SizedBox(width: 6),
+                                    Text(
+                                      isBooked ? 'Booked' : 'Available',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // Car Name
+                              Text(
+                                car.carName,
+                                style: TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black87,
+                                ),
+                              ),
+                              SizedBox(height: 12),
+                              
+                              // Location
+                              Row(
+                                children: [
+                                  Container(
+                                    padding: EdgeInsets.all(8),
+                                    decoration: BoxDecoration(
+                                      color: AppPallete.gradient3.withOpacity(0.1),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Icon(
+                                      Icons.location_on,
+                                      color: AppPallete.gradient3,
+                                      size: 20,
+                                    ),
+                                  ),
+                                  SizedBox(width: 10),
+                                  Expanded(
+                                    child: Text(
+                                      car.location,
+                                      style: TextStyle(
+                                        color: Colors.grey[700],
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 12),
+                              
+                              // Car Number
+                              Row(
+                                children: [
+                                  Container(
+                                    padding: EdgeInsets.all(8),
+                                    decoration: BoxDecoration(
+                                      color: AppPallete.gradient3.withOpacity(0.1),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Icon(
+                                      Icons.confirmation_number,
+                                      color: AppPallete.gradient3,
+                                      size: 20,
+                                    ),
+                                  ),
+                                  SizedBox(width: 10),
+                                  Text(
+                                    car.carNumber,
+                                    style: TextStyle(
+                                      color: Colors.grey[700],
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 16),
+                              
+                              // Price Container
+                              Container(
+                                width: double.infinity,
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                  vertical: 14,
+                                ),
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      AppPallete.gradient1.withOpacity(0.15),
+                                      AppPallete.gradient2.withOpacity(0.15),
+                                    ],
+                                  ),
+                                  borderRadius: BorderRadius.circular(12),
+                                  border: Border.all(
+                                    color: AppPallete.gradient3.withOpacity(0.3),
+                                    width: 1.5,
+                                  ),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Icon(
+                                          Icons.payments,
+                                          color: AppPallete.gradient3,
+                                          size: 24,
+                                        ),
+                                        SizedBox(width: 8),
+                                        Text(
+                                          'Price per Day',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.grey[700],
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Text(
+                                      '${car.pricePerDay} TND',
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        color: AppPallete.gradient3,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              );
+            },
+          ),
         ),
       ),
     );
