@@ -90,7 +90,7 @@ class _BookingHeroSectionState extends State<BookingHeroSection> {
                   onChanged: updateSuggestions,
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.search, color: Colors.purple),
-                    hintText: 'City, airport, address, or hotel',
+                    hintText: 'Search by City or address',
                     border: InputBorder.none,
                     contentPadding: const EdgeInsets.symmetric(vertical: 16),
                   ),

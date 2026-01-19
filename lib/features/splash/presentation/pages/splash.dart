@@ -25,8 +25,13 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> _checkInternetAndProceed() async {
     final internetChecker = InternetConnection();
     bool hasInternet = await internetChecker.hasInternetAccess;
+
     if (hasInternet) {
+      // Start the splash event
       context.read<SplashBloc>().add(LoadSplashEvent());
+
+      // Wait for 5 seconds
+      await Future.delayed(Duration(seconds: 5));
     } else {
       Navigator.pushNamed(context, AppRoutes.noInternet);
     }
@@ -80,7 +85,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   height: 150,
                 ),
                 Text(
-                  'YallaDrive',
+                  '',
                   style: TextStyle(
                       fontSize: 36,
                       fontWeight: FontWeight.bold,

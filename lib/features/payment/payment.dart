@@ -109,7 +109,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
     var options = {
       'key': AppSecrets.razorpayKEY,
       'amount': booking!.price * 100,
-      'currency': 'INR',
+      'currency': 'TND',
       'name': 'Car Rental',
       'description': 'Car for rent',
       'prefill': {'contact': '9876543210', 'email': 'test@example.com'},
@@ -142,7 +142,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Razorpay Payment"),
+        title: const Text("Tunisie Monetique Payment"),
       ),
       body: SafeArea(
         child: Center(
