@@ -111,7 +111,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
           email: email,
           role: 'CUSTOMER',
           createdAt: DateTime.now(),
-          fcmtoken: fcmToken!,
+          fcmtoken: fcmToken ?? '',
         );
 
         await fireStore
@@ -159,13 +159,14 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
         if (userDoc.exists) {
           // User exists, return existing user data
+          final data = userDoc.data()!;
           return UserModel.fromJson({
             'id': user.uid,
             'email': user.email ?? '',
             'name': user.displayName ?? '',
-            'role': userDoc.data()?['role'] ?? 'CUSTOMER',
-            'createdAt': userDoc.data()?['createdAt'] ?? Timestamp.now(),
-            'fcmtoken': userDoc.data()?['fcmtoken'] ?? '',
+            'role': data['role'] ?? 'CUSTOMER',
+            'createdAt': data['createdAt'] ?? Timestamp.now(),
+            'fcmtoken': data['fcmtoken'] ?? '',
           });
         } else {
           // New user, create user document

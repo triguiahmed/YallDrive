@@ -144,10 +144,10 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: () {
                         context.read<AuthBloc>().add(AuthGoogleLogin());
                       },
-                      icon: Image.network(
-                        'https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg',
-                        height: 24,
-                        width: 24,
+                      icon: Icon(
+                        Icons.account_circle,
+                        color: Colors.blue,
+                        size: 24,
                       ),
                       label: Text(
                         'Sign in with Google',
