@@ -25,6 +25,8 @@ class AuthLogin extends AuthEvent {
   });
 }
 
+class AuthGoogleLogin extends AuthEvent {}
+
 class AuthLogout extends AuthEvent {}
 
 class AuthIsUserLoggedIn extends AuthEvent {}

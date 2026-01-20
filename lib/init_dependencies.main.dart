@@ -45,6 +45,12 @@ Future<void> _initFirebase() async {
     () => firebaseMessaging,
   );
 
+  // Google Sign In
+  final googleSignIn = GoogleSignIn();
+  serviceLocator.registerLazySingleton<GoogleSignIn>(
+    () => googleSignIn,
+  );
+
   await _initializeFirebaseMessaging();
 }
 
@@ -125,6 +131,7 @@ void _initAuth() {
         serviceLocator(),
         serviceLocator(),
         serviceLocator(),
+        serviceLocator(),
       ),
     )
     ..registerFactory<AuthRepository>(
@@ -147,11 +154,17 @@ void _initAuth() {
         serviceLocator(),
       ),
     )
+    ..registerFactory<auth_google_signin.GoogleSignIn>(
+      () => auth_google_signin.GoogleSignIn(
+        serviceLocator(),
+      ),
+    )
     ..registerLazySingleton(
       () => AuthBloc(
         userSignup: serviceLocator(),
         userLogin: serviceLocator(),
         currentUser: serviceLocator(),
+        googleSignIn: serviceLocator(),
         appUserCubit: serviceLocator(),
       ),
     );

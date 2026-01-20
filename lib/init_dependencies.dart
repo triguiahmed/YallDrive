@@ -5,6 +5,7 @@ import 'package:car_rental_app_clean_arch/features/auth/domain/repositories/auth
 import 'package:car_rental_app_clean_arch/features/auth/domain/usecases/current_user.dart';
 import 'package:car_rental_app_clean_arch/features/auth/domain/usecases/user_login.dart';
 import 'package:car_rental_app_clean_arch/features/auth/domain/usecases/user_signup.dart';
+import 'package:car_rental_app_clean_arch/features/auth/domain/usecases/google_signin.dart' as auth_google_signin;
 import 'package:car_rental_app_clean_arch/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:car_rental_app_clean_arch/features/booking/data/datasources/booking_remote_data_source.dart';
 import 'package:car_rental_app_clean_arch/features/booking/data/repositories/booking_repository_impl.dart';
@@ -40,6 +41,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 part 'init_dependencies.main.dart';

@@ -3,6 +3,7 @@ import 'package:car_rental_app_clean_arch/features/auth/data/models/user_model.d
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 abstract interface class AuthRemoteDataSource {
   Future<UserModel> signUpWithEmailPassword({
@@ -16,6 +17,8 @@ abstract interface class AuthRemoteDataSource {
     required String password,
   });
 
+  Future<UserModel> signInWithGoogle();
+
   Future<UserModel?> getCurrentUserData();
 }
 
@@ -23,10 +26,13 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final FirebaseAuth firebaseAuth;
   final FirebaseFirestore fireStore;
   final FirebaseMessaging fireMessaging;
+  final GoogleSignIn googleSignIn;
+  
   AuthRemoteDataSourceImpl(
     this.firebaseAuth,
     this.fireStore,
     this.fireMessaging,
+    this.googleSignIn,
   );
 
   @override
@@ -105,7 +111,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
           email: email,
           role: 'CUSTOMER',
           createdAt: DateTime.now(),
-          fcmtoken: fcmToken!,
+          fcmtoken: fcmToken ?? '',
         );
 
         await fireStore
@@ -114,6 +120,74 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
             .set(userModel.toJson());
 
         return userModel;
+      } else {
+        throw ServerException('User is null');
+      }
+    } on FirebaseAuthException catch (e) {
+      throw ServerException(e.toString());
+    } catch (e) {
+      throw ServerException(e.toString());
+    }
+  }
+
+  @override
+  Future<UserModel> signInWithGoogle() async {
+    try {
+      // Trigger the Google Sign-In flow
+      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+      
+      if (googleUser == null) {
+        throw ServerException('Google Sign-In was cancelled');
+      }
+
+      // Obtain the auth details from the request
+      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+
+      // Create a new credential
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      // Sign in to Firebase with the Google credential
+      final response = await firebaseAuth.signInWithCredential(credential);
+
+      final user = response.user;
+      if (user != null) {
+        // Check if user document exists in Firestore
+        final userDoc = await fireStore.collection('users').doc(user.uid).get();
+
+        if (userDoc.exists) {
+          // User exists, return existing user data
+          final data = userDoc.data()!;
+          return UserModel.fromJson({
+            'id': user.uid,
+            'email': user.email ?? '',
+            'name': user.displayName ?? '',
+            'role': data['role'] ?? 'CUSTOMER',
+            'createdAt': data['createdAt'] ?? Timestamp.now(),
+            'fcmtoken': data['fcmtoken'] ?? '',
+          });
+        } else {
+          // New user, create user document
+          final String? fcmToken = await fireMessaging.getToken();
+
+          final userModel = UserModel(
+            id: user.uid,
+            name: user.displayName ?? 'Google User',
+            email: user.email ?? '',
+            role: 'CUSTOMER',
+            createdAt: DateTime.now(),
+            fcmtoken: fcmToken ?? '',
+          );
+
+          await fireStore
+              .collection('users')
+              .doc(user.uid)
+              .set(userModel.toJson());
+
+          return userModel;
+        }
       } else {
         throw ServerException('User is null');
       }
