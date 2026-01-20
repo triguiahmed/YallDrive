@@ -18,6 +18,9 @@ Future<void> initDependencies() async {
   _initProfile();
   _initRegister();
   _initBooking();
+  _initReview();
+  _initPayment();
+  _initFavorites();
 }
 
 Future<void> _initFirebase() async {
@@ -296,3 +299,160 @@ void _initBooking() {
       ),
     );
 }
+
+void _initReview() {
+  serviceLocator
+    ..registerFactory<ReviewRemoteDataSource>(
+      () => ReviewRemoteDataSourceImpl(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory<ReviewRepository>(
+      () => ReviewRepositoryImpl(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory<CreateReview>(
+      () => CreateReview(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory<GetReviewsForCar>(
+      () => GetReviewsForCar(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory<GetReviewsByUser>(
+      () => GetReviewsByUser(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory<UpdateReview>(
+      () => UpdateReview(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory<DeleteReview>(
+      () => DeleteReview(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory<GetAverageRatingForCar>(
+      () => GetAverageRatingForCar(
+        serviceLocator(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => ReviewBloc(
+        createReview: serviceLocator(),
+        getReviewsForCar: serviceLocator(),
+        getReviewsByUser: serviceLocator(),
+        updateReview: serviceLocator(),
+        deleteReview: serviceLocator(),
+        getAverageRatingForCar: serviceLocator(),
+      ),
+    );
+}
+
+void _initPayment() {
+  serviceLocator
+    ..registerFactory<PaymentRemoteDataSource>(
+      () => PaymentRemoteDataSourceImpl(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory<PaymentRepository>(
+      () => PaymentRepositoryImpl(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory<CreatePayment>(
+      () => CreatePayment(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory<GetPaymentForBooking>(
+      () => GetPaymentForBooking(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory<GetPaymentsByUser>(
+      () => GetPaymentsByUser(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory<UpdatePaymentStatus>(
+      () => UpdatePaymentStatus(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory<DeletePayment>(
+      () => DeletePayment(
+        serviceLocator(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => PaymentBloc(
+        createPayment: serviceLocator(),
+        getPaymentForBooking: serviceLocator(),
+        getPaymentsByUser: serviceLocator(),
+        updatePaymentStatus: serviceLocator(),
+        deletePayment: serviceLocator(),
+      ),
+    );
+}
+
+void _initFavorites() {
+  serviceLocator
+    ..registerFactory<FavoritesRemoteDataSource>(
+      () => FavoritesRemoteDataSourceImpl(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory<FavoritesRepository>(
+      () => FavoritesRepositoryImpl(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory<AddFavorite>(
+      () => AddFavorite(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory<RemoveFavorite>(
+      () => RemoveFavorite(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory<GetFavoritesByUser>(
+      () => GetFavoritesByUser(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory<IsCarFavorited>(
+      () => IsCarFavorited(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory<ToggleFavorite>(
+      () => ToggleFavorite(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory<GetFavoriteCountForCar>(
+      () => GetFavoriteCountForCar(
+        serviceLocator(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => FavoritesBloc(
+        addFavorite: serviceLocator(),
+        removeFavorite: serviceLocator(),
+        getFavoritesByUser: serviceLocator(),
+        isCarFavorited: serviceLocator(),
+        toggleFavorite: serviceLocator(),
+        getFavoriteCountForCar: serviceLocator(),
+      ),
+    );
+}
+
