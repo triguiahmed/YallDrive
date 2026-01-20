@@ -4,6 +4,7 @@ import 'package:car_rental_app_clean_arch/core/usecase/usecase.dart';
 import 'package:car_rental_app_clean_arch/features/auth/domain/usecases/current_user.dart';
 import 'package:car_rental_app_clean_arch/features/auth/domain/usecases/user_login.dart';
 import 'package:car_rental_app_clean_arch/features/auth/domain/usecases/user_signup.dart';
+import 'package:car_rental_app_clean_arch/features/auth/domain/usecases/google_signin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,20 +15,24 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final UserSignup _userSignup;
   final UserLogin _userLogin;
   final CurrentUser _currentUser;
+  final GoogleSignIn _googleSignIn;
   final AppUserCubit _appUserCubit;
   AuthBloc({
     required UserSignup userSignup,
     required UserLogin userLogin,
     required CurrentUser currentUser,
+    required GoogleSignIn googleSignIn,
     required AppUserCubit appUserCubit,
   })  : _userLogin = userLogin,
         _userSignup = userSignup,
         _currentUser = currentUser,
+        _googleSignIn = googleSignIn,
         _appUserCubit = appUserCubit,
         super(AuthInitial()) {
     on<AuthEvent>((_, emit) => emit(AuthLoading()));
     on<AuthSignUp>(_onAuthSignUp);
     on<AuthLogin>(_onAuthLogin);
+    on<AuthGoogleLogin>(_onAuthGoogleLogin);
     on<AuthIsUserLoggedIn>(_isUserLoggedIn);
   }
 
@@ -58,6 +63,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         password: event.password,
       ),
     );
+    res.fold(
+      (failure) => emit(AuthFailure(failure.message)),
+      (user) => _emitAuthSuccess(user, emit),
+    );
+  }
+
+  void _onAuthGoogleLogin(
+    AuthGoogleLogin event,
+    Emitter<AuthState> emit,
+  ) async {
+    final res = await _googleSignIn(NoParams());
     res.fold(
       (failure) => emit(AuthFailure(failure.message)),
       (user) => _emitAuthSuccess(user, emit),
