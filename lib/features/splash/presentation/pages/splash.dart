@@ -1,9 +1,9 @@
-import 'package:car_rental_app_clean_arch/core/common/cubits/app_user/app_user_cubit.dart';
-import 'package:car_rental_app_clean_arch/core/constants/constants.dart';
-import 'package:car_rental_app_clean_arch/core/routes/app_routes.dart';
-import 'package:car_rental_app_clean_arch/core/theme/app_pallete.dart';
-import 'package:car_rental_app_clean_arch/core/utils/show_snackerBar.dart';
-import 'package:car_rental_app_clean_arch/features/splash/presentation/bloc/splash_bloc.dart';
+import 'package:yaladrive/core/common/cubits/app_user/app_user_cubit.dart';
+import 'package:yaladrive/core/constants/constants.dart';
+import 'package:yaladrive/core/routes/app_routes.dart';
+import 'package:yaladrive/core/theme/app_pallete.dart';
+import 'package:yaladrive/core/utils/show_snackerBar.dart';
+import 'package:yaladrive/features/splash/presentation/bloc/splash_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';

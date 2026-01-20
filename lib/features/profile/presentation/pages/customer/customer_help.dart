@@ -1,5 +1,8 @@
-import 'package:car_rental_app_clean_arch/features/profile/presentation/widgets/help_option.dart';
+import 'package:yaladrive/features/profile/presentation/widgets/help_option.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class CustomerHelp extends StatelessWidget {
   const CustomerHelp({super.key});
@@ -36,6 +39,36 @@ class CustomerHelp extends StatelessWidget {
     );
   }
 
+  Future<void> _makePhoneCall(String phoneNumber) async {
+    final Uri launchUri = Uri(
+      scheme: 'tel',
+      path: phoneNumber,
+    );
+    if (await canLaunchUrl(launchUri)) {
+      await launchUrl(launchUri);
+    }
+  }
+
+  Future<void> _sendEmail(String email) async {
+    final Uri launchUri = Uri(
+      scheme: 'mailto',
+      path: email,
+      query: 'subject=Support Request&body=Hello, I need help with...',
+    );
+    if (await canLaunchUrl(launchUri)) {
+      await launchUrl(launchUri);
+    }
+  }
+
+  void _openLiveChat(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const LiveChatScreen(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,96 +84,44 @@ class CustomerHelp extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            HelpOption(
-              icon: Icons.help_outline,
-              title: 'Help Center',
-              subtitle: "Search a library of help articles",
-              onTap: () {
-                _showHelpBottomSheet(
-                  context, 
-                  "Help Center",
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("Search for common issues:", style: TextStyle(fontWeight: FontWeight.bold)),
-                      ListTile(
-                        leading: Icon(Icons.article),
-                        title: Text("How to book a car?"),
-                        onTap: () {},
-                      ),
-                      ListTile(
-                        leading: Icon(Icons.payment),
-                        title: Text("Payment & refund policies"),
-                        onTap: () {},
-                      ),
-                      ListTile(
-                        leading: Icon(Icons.security),
-                        title: Text("Safety guidelines for renters"),
-                        onTap: () {},
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-            HelpOption(
-              icon: Icons.phone,
-              title: 'Contact Host',
-              subtitle: 'Message or call your host',
-              onTap: () {
-                _showHelpBottomSheet(
-                  context, 
-                  "Contact Host",
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("Reach out to your host:", style: TextStyle(fontWeight: FontWeight.bold)),
-                      ListTile(
-                        leading: Icon(Icons.message),
-                        title: Text("Send a Message"),
-                        onTap: () {},
-                      ),
-                      ListTile(
-                        leading: Icon(Icons.call),
-                        title: Text("Call Host"),
-                        onTap: () {},
-                      ),
-                      ListTile(
-                        leading: Icon(Icons.email),
-                        title: Text("Email Support"),
-                        onTap: () {},
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
+             
             HelpOption(
               icon: Icons.headset_mic,
               title: 'Contact Support',
               subtitle: 'Call or chat with support',
               onTap: () {
                 _showHelpBottomSheet(
-                  context, 
+                  context,
                   "Contact Support",
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text("Choose your preferred support option:", style: TextStyle(fontWeight: FontWeight.bold)),
                       ListTile(
-                        leading: Icon(Icons.chat),
+                        leading: Icon(Icons.chat, color: Colors.purple),
                         title: Text("Live Chat with Support"),
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.pop(context);
+                          _openLiveChat(context);
+                        },
                       ),
                       ListTile(
-                        leading: Icon(Icons.call),
+                        leading: Icon(Icons.call, color: Colors.green),
                         title: Text("Call Customer Support"),
-                        onTap: () {},
+                        subtitle: Text("21709769"),
+                        onTap: () {
+                          Navigator.pop(context);
+                          _makePhoneCall("21709769");
+                        },
                       ),
                       ListTile(
-                        leading: Icon(Icons.help),
+                        leading: Icon(Icons.email, color: Colors.blue),
                         title: Text("Submit a Support Ticket"),
-                        onTap: () {},
+                        subtitle: Text("ahmed.trigui@outlook.com"),
+                        onTap: () {
+                          Navigator.pop(context);
+                          _sendEmail("ahmed.trigui@outlook.com");
+                        },
                       ),
                     ],
                   ),

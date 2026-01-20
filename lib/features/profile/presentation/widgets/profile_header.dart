@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:car_rental_app_clean_arch/core/routes/app_routes.dart';
-import 'package:car_rental_app_clean_arch/features/profile/domain/entities/customer_data.dart';
+import 'package:yaladrive/core/routes/app_routes.dart';
+import 'package:yaladrive/features/profile/domain/entities/customer_data.dart';
 
 class ProfileHeader extends StatelessWidget {
   final CustomerData customerData;

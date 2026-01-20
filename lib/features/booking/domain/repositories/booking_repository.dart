@@ -1,5 +1,5 @@
-import 'package:car_rental_app_clean_arch/core/error/failure.dart';
-import 'package:car_rental_app_clean_arch/features/booking/domain/entites/booking.dart';
+import 'package:yaladrive/core/error/failure.dart';
+import 'package:yaladrive/features/booking/domain/entites/booking.dart';
 import 'package:fpdart/fpdart.dart';
 
 abstract interface class BookingRepository {

@@ -1,5 +1,5 @@
-import 'package:car_rental_app_clean_arch/core/error/exception.dart';
-import 'package:car_rental_app_clean_arch/features/profile/data/models/customer_data_model.dart';
+import 'package:yaladrive/core/error/exception.dart';
+import 'package:yaladrive/features/profile/data/models/customer_data_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 Future<CustomerDataModel> getUser(String userId) async {

@@ -1,7 +1,7 @@
-import 'package:car_rental_app_clean_arch/core/common/entities/user.dart';
-import 'package:car_rental_app_clean_arch/core/error/failure.dart';
-import 'package:car_rental_app_clean_arch/core/usecase/usecase.dart';
-import 'package:car_rental_app_clean_arch/features/auth/domain/repositories/auth_repository.dart';
+import 'package:yaladrive/core/common/entities/user.dart';
+import 'package:yaladrive/core/error/failure.dart';
+import 'package:yaladrive/core/usecase/usecase.dart';
+import 'package:yaladrive/features/auth/domain/repositories/auth_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
 

@@ -1,4 +1,4 @@
-import 'package:car_rental_app_clean_arch/core/common/entities/car_details.dart';
+import 'package:yaladrive/core/common/entities/car_details.dart';
 
 class CarDetailsModel extends CarDetails {
   CarDetailsModel({

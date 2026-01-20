@@ -1,11 +1,11 @@
 import 'dart:io';
 
-import 'package:car_rental_app_clean_arch/core/error/exception.dart';
-import 'package:car_rental_app_clean_arch/core/error/failure.dart';
-import 'package:car_rental_app_clean_arch/features/register/data/datasources/register_remote_data_source.dart';
-import 'package:car_rental_app_clean_arch/features/register/data/models/car_details_model.dart';
-import 'package:car_rental_app_clean_arch/core/common/entities/car_details.dart';
-import 'package:car_rental_app_clean_arch/features/register/domain/repositories/register_repository.dart';
+import 'package:yaladrive/core/error/exception.dart';
+import 'package:yaladrive/core/error/failure.dart';
+import 'package:yaladrive/features/register/data/datasources/register_remote_data_source.dart';
+import 'package:yaladrive/features/register/data/models/car_details_model.dart';
+import 'package:yaladrive/core/common/entities/car_details.dart';
+import 'package:yaladrive/features/register/domain/repositories/register_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
 class RegisterRepositoryImpl implements RegisterRepository {

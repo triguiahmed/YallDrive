@@ -1,4 +1,4 @@
-import 'package:car_rental_app_clean_arch/core/error/failure.dart';
+import 'package:yaladrive/core/error/failure.dart';
 import 'package:fpdart/fpdart.dart';
 
 abstract interface class Usecase<SuccessType, Params> {

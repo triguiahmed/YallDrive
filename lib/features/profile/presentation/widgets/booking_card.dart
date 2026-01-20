@@ -1,6 +1,6 @@
-import 'package:car_rental_app_clean_arch/core/common/entities/car_details.dart';
-import 'package:car_rental_app_clean_arch/core/routes/app_routes.dart';
-import 'package:car_rental_app_clean_arch/features/booking/domain/entites/booking.dart';
+import 'package:yaladrive/core/common/entities/car_details.dart';
+import 'package:yaladrive/core/routes/app_routes.dart';
+import 'package:yaladrive/features/booking/domain/entites/booking.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 

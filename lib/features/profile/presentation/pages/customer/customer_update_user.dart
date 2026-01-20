@@ -1,11 +1,11 @@
 import 'dart:io';
 
-import 'package:car_rental_app_clean_arch/core/common/cubits/app_user/app_user_cubit.dart';
-import 'package:car_rental_app_clean_arch/core/utils/pick_image.dart';
-import 'package:car_rental_app_clean_arch/core/utils/show_snackerbar.dart';
+import 'package:yaladrive/core/common/cubits/app_user/app_user_cubit.dart';
+import 'package:yaladrive/core/utils/pick_image.dart';
+import 'package:yaladrive/core/utils/show_snackerbar.dart';
 import 'package:flutter/material.dart';
-import 'package:car_rental_app_clean_arch/core/common/widgets/loader.dart';
-import 'package:car_rental_app_clean_arch/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:yaladrive/core/common/widgets/loader.dart';
+import 'package:yaladrive/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class EditProfileScreen extends StatefulWidget {

@@ -1,13 +1,13 @@
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
-import 'package:car_rental_app_clean_arch/features/profile/domain/entities/customer_data.dart';
-import 'package:car_rental_app_clean_arch/features/profile/domain/entities/owner_data.dart';
-import 'package:car_rental_app_clean_arch/features/profile/domain/usecases/check_car_booked.dart';
-import 'package:car_rental_app_clean_arch/features/profile/domain/usecases/edit_user_data.dart';
-import 'package:car_rental_app_clean_arch/features/profile/domain/usecases/get_customer_data.dart';
-import 'package:car_rental_app_clean_arch/features/profile/domain/usecases/get_owner_data.dart';
-import 'package:car_rental_app_clean_arch/core/common/entities/car_details.dart';
+import 'package:yaladrive/features/profile/domain/entities/customer_data.dart';
+import 'package:yaladrive/features/profile/domain/entities/owner_data.dart';
+import 'package:yaladrive/features/profile/domain/usecases/check_car_booked.dart';
+import 'package:yaladrive/features/profile/domain/usecases/edit_user_data.dart';
+import 'package:yaladrive/features/profile/domain/usecases/get_customer_data.dart';
+import 'package:yaladrive/features/profile/domain/usecases/get_owner_data.dart';
+import 'package:yaladrive/core/common/entities/car_details.dart';
 import 'package:flutter/material.dart';
 
 part 'profile_event.dart';

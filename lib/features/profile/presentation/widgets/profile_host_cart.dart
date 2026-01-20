@@ -1,7 +1,7 @@
-import 'package:car_rental_app_clean_arch/core/constants/constants.dart';
-import 'package:car_rental_app_clean_arch/core/routes/app_routes.dart';
-import 'package:car_rental_app_clean_arch/core/theme/app_pallete.dart';
-import 'package:car_rental_app_clean_arch/core/utils/show_snackerbar.dart';
+import 'package:yaladrive/core/constants/constants.dart';
+import 'package:yaladrive/core/routes/app_routes.dart';
+import 'package:yaladrive/core/theme/app_pallete.dart';
+import 'package:yaladrive/core/utils/show_snackerbar.dart';
 import 'package:flutter/material.dart';
 
 class ProfileHostCart extends StatelessWidget {

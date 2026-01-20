@@ -1,4 +1,4 @@
-package com.example.car_rental_app_clean_arch
+package com.example.yalladrive
 
 import io.flutter.embedding.android.FlutterActivity
 

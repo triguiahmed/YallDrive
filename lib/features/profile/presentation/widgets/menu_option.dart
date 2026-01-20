@@ -1,6 +1,6 @@
-import 'package:car_rental_app_clean_arch/core/common/cubits/app_user/app_user_cubit.dart';
-import 'package:car_rental_app_clean_arch/core/routes/app_routes.dart';
-import 'package:car_rental_app_clean_arch/features/profile/presentation/widgets/menu_item.dart';
+import 'package:yaladrive/core/common/cubits/app_user/app_user_cubit.dart';
+import 'package:yaladrive/core/routes/app_routes.dart';
+import 'package:yaladrive/features/profile/presentation/widgets/menu_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

@@ -1,5 +1,5 @@
-import 'package:car_rental_app_clean_arch/core/error/exception.dart';
-import 'package:car_rental_app_clean_arch/features/auth/data/models/user_model.dart';
+import 'package:yaladrive/core/error/exception.dart';
+import 'package:yaladrive/features/auth/data/models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';

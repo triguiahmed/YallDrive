@@ -1,15 +1,15 @@
-import 'package:car_rental_app_clean_arch/core/common/cubits/app_user/app_user_cubit.dart';
-import 'package:car_rental_app_clean_arch/core/common/widgets/loader.dart';
-import 'package:car_rental_app_clean_arch/core/routes/app_routes.dart';
-import 'package:car_rental_app_clean_arch/core/utils/location_service.dart';
-import 'package:car_rental_app_clean_arch/core/utils/show_snackerbar.dart';
-import 'package:car_rental_app_clean_arch/features/register/presentation/bloc/register_bloc.dart';
+import 'package:yaladrive/core/common/cubits/app_user/app_user_cubit.dart';
+import 'package:yaladrive/core/common/widgets/loader.dart';
+import 'package:yaladrive/core/routes/app_routes.dart';
+import 'package:yaladrive/core/utils/location_service.dart';
+import 'package:yaladrive/core/utils/show_snackerbar.dart';
+import 'package:yaladrive/features/register/presentation/bloc/register_bloc.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:dotted_border/dotted_border.dart';
-import 'package:car_rental_app_clean_arch/core/theme/app_pallete.dart';
-import 'package:car_rental_app_clean_arch/core/utils/pick_image.dart';
-import 'package:car_rental_app_clean_arch/features/register/presentation/widgets/register_field.dart';
+import 'package:yaladrive/core/theme/app_pallete.dart';
+import 'package:yaladrive/core/utils/pick_image.dart';
+import 'package:yaladrive/features/register/presentation/widgets/register_field.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 

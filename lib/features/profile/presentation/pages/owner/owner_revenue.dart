@@ -1,4 +1,4 @@
-import 'package:car_rental_app_clean_arch/core/common/cubits/app_user/app_user_cubit.dart';
+import 'package:yaladrive/core/common/cubits/app_user/app_user_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

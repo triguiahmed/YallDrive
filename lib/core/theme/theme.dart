@@ -1,4 +1,4 @@
-import 'package:car_rental_app_clean_arch/core/theme/app_pallete.dart';
+import 'package:yaladrive/core/theme/app_pallete.dart';
 import 'package:flutter/material.dart';
 
 class AppTheme {

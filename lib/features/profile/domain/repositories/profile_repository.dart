@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:car_rental_app_clean_arch/core/error/failure.dart';
-import 'package:car_rental_app_clean_arch/features/profile/domain/entities/customer_data.dart';
-import 'package:car_rental_app_clean_arch/features/profile/domain/entities/owner_data.dart';
+import 'package:yaladrive/core/error/failure.dart';
+import 'package:yaladrive/features/profile/domain/entities/customer_data.dart';
+import 'package:yaladrive/features/profile/domain/entities/owner_data.dart';
 import 'package:fpdart/fpdart.dart';
 
 abstract interface class ProfileRepository {

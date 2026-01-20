@@ -1,9 +1,9 @@
-import 'package:car_rental_app_clean_arch/core/common/cubits/app_user/app_user_cubit.dart';
-import 'package:car_rental_app_clean_arch/core/common/entities/user.dart';
-import 'package:car_rental_app_clean_arch/core/usecase/usecase.dart';
-import 'package:car_rental_app_clean_arch/features/auth/domain/usecases/current_user.dart';
-import 'package:car_rental_app_clean_arch/features/auth/domain/usecases/user_login.dart';
-import 'package:car_rental_app_clean_arch/features/auth/domain/usecases/user_signup.dart';
+import 'package:yaladrive/core/common/cubits/app_user/app_user_cubit.dart';
+import 'package:yaladrive/core/common/entities/user.dart';
+import 'package:yaladrive/core/usecase/usecase.dart';
+import 'package:yaladrive/features/auth/domain/usecases/current_user.dart';
+import 'package:yaladrive/features/auth/domain/usecases/user_login.dart';
+import 'package:yaladrive/features/auth/domain/usecases/user_signup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

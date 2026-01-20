@@ -1,4 +1,4 @@
-import 'package:car_rental_app_clean_arch/core/routes/app_routes.dart';
+import 'package:yaladrive/core/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 
 class Owner {

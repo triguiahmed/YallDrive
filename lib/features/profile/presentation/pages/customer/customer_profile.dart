@@ -1,14 +1,14 @@
-import 'package:car_rental_app_clean_arch/core/common/cubits/app_user/app_user_cubit.dart';
-import 'package:car_rental_app_clean_arch/core/common/widgets/loader.dart';
-import 'package:car_rental_app_clean_arch/core/utils/show_snackerbar.dart';
-import 'package:car_rental_app_clean_arch/features/booking/presentation/bloc/booking_bloc.dart';
-import 'package:car_rental_app_clean_arch/features/profile/presentation/bloc/profile_bloc.dart';
-import 'package:car_rental_app_clean_arch/features/profile/presentation/pages/customer/customer.dart';
-import 'package:car_rental_app_clean_arch/features/profile/presentation/pages/scaffold_page.dart';
-import 'package:car_rental_app_clean_arch/features/profile/presentation/widgets/empty_profile_header.dart';
-import 'package:car_rental_app_clean_arch/features/profile/presentation/widgets/menu_option.dart';
-import 'package:car_rental_app_clean_arch/features/profile/presentation/widgets/profile_header.dart';
-import 'package:car_rental_app_clean_arch/features/profile/presentation/widgets/profile_host_cart.dart';
+import 'package:yaladrive/core/common/cubits/app_user/app_user_cubit.dart';
+import 'package:yaladrive/core/common/widgets/loader.dart';
+import 'package:yaladrive/core/utils/show_snackerbar.dart';
+import 'package:yaladrive/features/booking/presentation/bloc/booking_bloc.dart';
+import 'package:yaladrive/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:yaladrive/features/profile/presentation/pages/customer/customer.dart';
+import 'package:yaladrive/features/profile/presentation/pages/scaffold_page.dart';
+import 'package:yaladrive/features/profile/presentation/widgets/empty_profile_header.dart';
+import 'package:yaladrive/features/profile/presentation/widgets/menu_option.dart';
+import 'package:yaladrive/features/profile/presentation/widgets/profile_header.dart';
+import 'package:yaladrive/features/profile/presentation/widgets/profile_host_cart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
