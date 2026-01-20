@@ -3,6 +3,7 @@ import 'package:yaladrive/features/auth/data/models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 abstract interface class AuthRemoteDataSource {
   Future<UserModel> signUpWithEmailPassword({
@@ -17,16 +18,20 @@ abstract interface class AuthRemoteDataSource {
   });
 
   Future<UserModel?> getCurrentUserData();
+
+  Future<UserModel> signInWithGoogle();
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final FirebaseAuth firebaseAuth;
   final FirebaseFirestore fireStore;
   final FirebaseMessaging fireMessaging;
+  final GoogleSignIn googleSignIn;
   AuthRemoteDataSourceImpl(
     this.firebaseAuth,
     this.fireStore,
     this.fireMessaging,
+    this.googleSignIn,
   );
 
   @override
@@ -116,6 +121,72 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         return userModel;
       } else {
         throw ServerException('User is null');
+      }
+    } on FirebaseAuthException catch (e) {
+      throw ServerException(e.toString());
+    } catch (e) {
+      throw ServerException(e.toString());
+    }
+  }
+
+  @override
+  Future<UserModel> signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+
+      if (googleUser == null) {
+        throw ServerException('Google sign-in was cancelled');
+      }
+
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      final UserCredential userCredential =
+          await firebaseAuth.signInWithCredential(credential);
+
+      final user = userCredential.user;
+
+      if (user == null) {
+        throw ServerException('Google sign-in failed');
+      }
+
+      // Check if user already exists in Firestore
+      final userDoc = await fireStore.collection('users').doc(user.uid).get();
+
+      if (userDoc.exists) {
+        // User exists, return existing data
+        return UserModel.fromJson({
+          'id': user.uid,
+          'email': user.email ?? '',
+          'name': user.displayName ?? '',
+          'role': userDoc.data()?['role'] ?? 'CUSTOMER',
+          'createdAt': userDoc.data()?['createdAt'] ?? Timestamp.now(),
+          'fcmtoken': userDoc.data()?['fcmtoken'] ?? '',
+        });
+      } else {
+        // New user, create document in Firestore
+        final String? fcmToken = await fireMessaging.getToken();
+
+        final userModel = UserModel(
+          id: user.uid,
+          name: user.displayName ?? '',
+          email: user.email ?? '',
+          role: 'CUSTOMER',
+          createdAt: DateTime.now(),
+          fcmtoken: fcmToken ?? '',
+        );
+
+        await fireStore
+            .collection('users')
+            .doc(user.uid)
+            .set(userModel.toJson());
+
+        return userModel;
       }
     } on FirebaseAuthException catch (e) {
       throw ServerException(e.toString());

@@ -119,12 +119,18 @@ void _initSplash() {
 }
 
 void _initAuth() {
+  // Register GoogleSignIn
+  serviceLocator.registerLazySingleton<GoogleSignIn>(
+    () => GoogleSignIn(),
+  );
+
   serviceLocator
     ..registerFactory<AuthRemoteDataSource>(
       () => AuthRemoteDataSourceImpl(
         serviceLocator(),
         serviceLocator(),
         serviceLocator(),
+        serviceLocator<GoogleSignIn>(),
       ),
     )
     ..registerFactory<AuthRepository>(
@@ -147,11 +153,17 @@ void _initAuth() {
         serviceLocator(),
       ),
     )
+    ..registerFactory<UserGoogleSignIn>(
+      () => UserGoogleSignIn(
+        serviceLocator(),
+      ),
+    )
     ..registerLazySingleton(
       () => AuthBloc(
         userSignup: serviceLocator(),
         userLogin: serviceLocator(),
         currentUser: serviceLocator(),
+        googleSignIn: serviceLocator(),
         appUserCubit: serviceLocator(),
       ),
     );

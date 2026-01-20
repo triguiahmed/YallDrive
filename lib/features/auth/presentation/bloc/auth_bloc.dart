@@ -4,6 +4,7 @@ import 'package:yaladrive/core/usecase/usecase.dart';
 import 'package:yaladrive/features/auth/domain/usecases/current_user.dart';
 import 'package:yaladrive/features/auth/domain/usecases/user_login.dart';
 import 'package:yaladrive/features/auth/domain/usecases/user_signup.dart';
+import 'package:yaladrive/features/auth/domain/usecases/user_google_sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,20 +15,24 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final UserSignup _userSignup;
   final UserLogin _userLogin;
   final CurrentUser _currentUser;
+  final UserGoogleSignIn _googleSignIn;
   final AppUserCubit _appUserCubit;
   AuthBloc({
     required UserSignup userSignup,
     required UserLogin userLogin,
     required CurrentUser currentUser,
+    required UserGoogleSignIn googleSignIn,
     required AppUserCubit appUserCubit,
   })  : _userLogin = userLogin,
         _userSignup = userSignup,
         _currentUser = currentUser,
+        _googleSignIn = googleSignIn,
         _appUserCubit = appUserCubit,
         super(AuthInitial()) {
     on<AuthEvent>((_, emit) => emit(AuthLoading()));
     on<AuthSignUp>(_onAuthSignUp);
     on<AuthLogin>(_onAuthLogin);
+    on<AuthGoogleSignIn>(_onGoogleSignIn);
     on<AuthIsUserLoggedIn>(_isUserLoggedIn);
   }
 
@@ -69,6 +74,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) async {
     final res = await _currentUser(NoParams());
+    res.fold(
+      (failure) => emit(AuthFailure(failure.message)),
+      (user) => _emitAuthSuccess(user, emit),
+    );
+  }
+
+  void _onGoogleSignIn(
+    AuthGoogleSignIn event,
+    Emitter<AuthState> emit,
+  ) async {
+    final res = await _googleSignIn(NoParams());
     res.fold(
       (failure) => emit(AuthFailure(failure.message)),
       (user) => _emitAuthSuccess(user, emit),

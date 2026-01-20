@@ -109,6 +109,48 @@ class _LoginPageState extends State<LoginPage> {
                       buttonColor: AppPallete.gradient1,
                     ),
                   ),
+                  SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Expanded(child: Divider()),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+                        child: Text(
+                          'OR',
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                      ),
+                      Expanded(child: Divider()),
+                    ],
+                  ),
+                  SizedBox(height: 16),
+                  SizedBox(
+                    width: double.infinity,
+                    child: OutlinedButton.icon(
+                      onPressed: () {
+                        context.read<AuthBloc>().add(AuthGoogleSignIn());
+                      },
+                      icon: Image.asset(
+                        'assets/images/google_logo.png',
+                        height: 24,
+                        width: 24,
+                      ),
+                      label: Text(
+                        'Continue with Google',
+                        style: TextStyle(
+                          color: Colors.black87,
+                          fontSize: 16,
+                        ),
+                      ),
+                      style: OutlinedButton.styleFrom(
+                        padding: EdgeInsets.symmetric(vertical: 12),
+                        side: BorderSide(color: Colors.grey.shade300),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             );
