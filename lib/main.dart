@@ -3,8 +3,11 @@ import 'package:yaladrive/core/routes/app_routes.dart';
 import 'package:yaladrive/core/theme/theme.dart';
 import 'package:yaladrive/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:yaladrive/features/booking/presentation/bloc/booking_bloc.dart';
+import 'package:yaladrive/features/favorites/presentation/bloc/favorites_bloc.dart';
+import 'package:yaladrive/features/payment/presentation/bloc/payment_bloc.dart';
 import 'package:yaladrive/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:yaladrive/features/register/presentation/bloc/register_bloc.dart';
+import 'package:yaladrive/features/review/presentation/bloc/review_bloc.dart';
 import 'package:yaladrive/features/splash/presentation/bloc/splash_bloc.dart';
 import 'package:yaladrive/firebase_options.dart';
 import 'package:yaladrive/init_dependencies.dart';
@@ -27,6 +30,9 @@ void main() async {
         BlocProvider(create: (_) => serviceLocator<RegisterBloc>()),
         BlocProvider(create: (_) => serviceLocator<ProfileBloc>()),
         BlocProvider(create: (_) => serviceLocator<BookingBloc>()),
+        BlocProvider(create: (_) => serviceLocator<ReviewBloc>()),
+        BlocProvider(create: (_) => serviceLocator<PaymentBloc>()),
+        BlocProvider(create: (_) => serviceLocator<FavoritesBloc>()),
       ],
       child: MyApp(),
     ),
