@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yaladrive/core/common/widgets/loader.dart';
 import 'package:yaladrive/core/theme/app_pallete.dart';
+import 'package:yaladrive/core/utils/show_snackerBar.dart';
 import 'package:yaladrive/core/utils/show_snackerbar.dart' as utils;
 import 'package:yaladrive/features/review/domain/entities/review.dart';
 import 'package:yaladrive/features/review/presentation/bloc/review_bloc.dart';
@@ -85,19 +86,19 @@ class _CarReviewsPageState extends State<CarReviewsPage> {
       body: BlocConsumer<ReviewBloc, ReviewState>(
         listener: (context, state) {
           if (state is ReviewError) {
-            utils.showSnackerbar(context, state.message);
+            showSnackerbar(context, state.message);
           } else if (state is ReviewsLoaded) {
             _reviews = state.reviews;
             _calculateAverageRating();
             _loadUserNames(state.reviews);
           } else if (state is ReviewCreated) {
-            utils.showSnackerbar(context, 'Review added successfully!');
+            showSnackerbar(context, 'Review added successfully!');
             _loadReviews();
           } else if (state is ReviewUpdated) {
-            utils.showSnackerbar(context, 'Review updated successfully!');
+            showSnackerbar(context, 'Review updated successfully!');
             _loadReviews();
           } else if (state is ReviewDeleted) {
-            utils.showSnackerbar(context, 'Review deleted successfully!');
+            showSnackerbar(context, 'Review deleted successfully!');
             _loadReviews();
           }
         },

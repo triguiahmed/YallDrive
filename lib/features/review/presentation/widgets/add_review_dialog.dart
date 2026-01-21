@@ -6,15 +6,15 @@ import 'package:yaladrive/features/review/presentation/bloc/review_bloc.dart';
 import 'package:yaladrive/features/review/presentation/widgets/star_rating.dart';
 
 class AddReviewDialog extends StatefulWidget {
-  final String carNo;
-  final String userId;
+  final String? carNo;
+  final String? userId;
   final Review? existingReview;
   final VoidCallback? onReviewSubmitted;
 
   const AddReviewDialog({
     super.key,
-    required this.carNo,
-    required this.userId,
+     this.carNo,
+     this.userId,
     this.existingReview,
     this.onReviewSubmitted,
   });
@@ -185,7 +185,7 @@ class _AddReviewDialogState extends State<AddReviewDialog> {
         context.read<ReviewBloc>().add(
               UpdateReviewEvent(
                 reviewId: widget.existingReview!.id,
-                userId: widget.userId,
+                userId: widget.userId!,
                 rating: _rating,
                 comment: _commentController.text.trim(),
               ),
@@ -193,8 +193,8 @@ class _AddReviewDialogState extends State<AddReviewDialog> {
       } else {
         context.read<ReviewBloc>().add(
               CreateReviewEvent(
-                carNo: widget.carNo,
-                userId: widget.userId,
+                carNo: widget.carNo!,
+                userId: widget.userId!,
                 rating: _rating,
                 comment: _commentController.text.trim(),
               ),
