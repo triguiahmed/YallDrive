@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yaladrive/core/common/widgets/loader.dart';
 import 'package:yaladrive/core/theme/app_pallete.dart';
-import 'package:yaladrive/core/utils/show_snackerbar.dart';
+import 'package:yaladrive/core/utils/show_snackerbar.dart' as utils;
 import 'package:yaladrive/features/payment/domain/entities/payment.dart';
 import 'package:yaladrive/features/payment/presentation/bloc/payment_bloc.dart';
 import 'package:yaladrive/features/payment/presentation/widgets/payment_card.dart';
@@ -109,12 +109,12 @@ class _PaymentHistoryPageState extends State<PaymentHistoryPage>
       body: BlocConsumer<PaymentBloc, PaymentState>(
         listener: (context, state) {
           if (state is PaymentError) {
-            showSnackBar(context, state.message);
+            utils.showSnackerbar(context, state.message);
           } else if (state is PaymentsLoaded) {
             _allPayments = state.payments;
             _loadBookingDetails(state.payments);
           } else if (state is PaymentUpdated) {
-            showSnackBar(context, 'Payment status updated');
+            utils.showSnackerbar(context, 'Payment status updated');
             _loadPayments();
           }
         },

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yaladrive/core/common/widgets/loader.dart';
 import 'package:yaladrive/core/theme/app_pallete.dart';
-import 'package:yaladrive/core/utils/show_snackerbar.dart';
+import 'package:yaladrive/core/utils/show_snackerbar.dart' as utils;
 import 'package:yaladrive/features/review/domain/entities/review.dart';
 import 'package:yaladrive/features/review/presentation/bloc/review_bloc.dart';
 import 'package:yaladrive/features/review/presentation/widgets/add_review_dialog.dart';

@@ -110,7 +110,7 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
 
     result.fold(
       (failure) => emit(FavoritesError(message: failure.message)),
-      (isFavorited) => emit(FavoriteStatusChecked(isFavorited: isFavorited)),
+      (isFavorited) => emit(FavoriteStatusChecked(isFavorited: isFavorited, carNo: event.carNo)),
     );
   }
 
@@ -129,7 +129,7 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
 
     result.fold(
       (failure) => emit(FavoritesError(message: failure.message)),
-      (isFavorited) => emit(FavoriteToggled(isFavorited: isFavorited)),
+      (isFavorited) => emit(FavoriteToggled(isFavorited: isFavorited, carNo: event.carNo)),
     );
   }
 

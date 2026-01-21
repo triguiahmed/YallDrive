@@ -23,14 +23,16 @@ final class FavoritesLoaded extends FavoritesState {
 
 final class FavoriteStatusChecked extends FavoritesState {
   final bool isFavorited;
+  final String carNo;
 
-  FavoriteStatusChecked({required this.isFavorited});
+  FavoriteStatusChecked({required this.isFavorited, required this.carNo});
 }
 
 final class FavoriteToggled extends FavoritesState {
   final bool isFavorited;
+  final String carNo;
 
-  FavoriteToggled({required this.isFavorited});
+  FavoriteToggled({required this.isFavorited, required this.carNo});
 }
 
 final class FavoriteCountLoaded extends FavoritesState {

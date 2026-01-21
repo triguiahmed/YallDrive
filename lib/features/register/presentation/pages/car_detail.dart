@@ -4,6 +4,7 @@ import 'package:yaladrive/core/common/entities/car_details.dart';
 import 'package:yaladrive/core/common/cubits/app_user/app_user_cubit.dart';
 import 'package:yaladrive/features/favorites/presentation/bloc/favorites_bloc.dart';
 import 'package:yaladrive/features/favorites/presentation/widgets/favorite_button.dart';
+import 'package:yaladrive/features/review/domain/entities/review.dart';
 import 'package:yaladrive/features/review/presentation/bloc/review_bloc.dart';
 import 'package:yaladrive/features/review/presentation/widgets/star_rating.dart';
 import 'package:yaladrive/features/review/presentation/widgets/review_card.dart';
@@ -40,7 +41,7 @@ class _CarDetailState extends State<CarDetail> {
       
       // Check if car is favorited
       context.read<FavoritesBloc>().add(
-            CheckIfCarFavoritedEvent(
+            CheckIsFavoritedEvent(
               userId: _currentUserId!,
               carNo: _car!.carNumber,
             ),
@@ -72,7 +73,7 @@ class _CarDetailState extends State<CarDetail> {
         title: const Text('Car Details'),
         actions: [
           if (_currentUserId != null)
-            FavoriteButton(
+            BlocFavoriteButton(
               carNo: car.carNumber,
               userId: _currentUserId!,
               size: 28,
@@ -251,8 +252,8 @@ class _CarDetailState extends State<CarDetail> {
               Row(
                 children: [
                   StarRating(
-                    rating: _calculateAverageRating(state.reviews),
-                    starSize: 20,
+                    rating: _calculateAverageRating(state.reviews).toInt(),
+                    size: 20,
                   ),
                   const SizedBox(width: 8),
                   Text(
@@ -367,9 +368,9 @@ class _CarDetailState extends State<CarDetail> {
     );
   }
 
-  double _calculateAverageRating(List reviews) {
+  double _calculateAverageRating(List<Review> reviews) {
     if (reviews.isEmpty) return 0;
-    final sum = reviews.fold<int>(0, (sum, r) => sum + r.rating);
+    final sum = reviews.fold<int>(0, (s, r) => s + r.rating);
     return sum / reviews.length;
   }
 
@@ -388,7 +389,7 @@ class _CarDetailState extends State<CarDetail> {
     );
   }
 
-  void _showEditReviewDialog(CarDetails car, dynamic review) {
+  void _showEditReviewDialog(CarDetails car, Review review) {
     showDialog(
       context: context,
       builder: (context) => AddReviewDialog(
@@ -404,7 +405,7 @@ class _CarDetailState extends State<CarDetail> {
     );
   }
 
-  void _deleteReview(dynamic review) {
+  void _deleteReview(Review review) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(

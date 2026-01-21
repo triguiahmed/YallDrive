@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yaladrive/core/common/widgets/loader.dart';
 import 'package:yaladrive/core/theme/app_pallete.dart';
-import 'package:yaladrive/core/utils/show_snackerbar.dart';
+import 'package:yaladrive/core/utils/show_snackerbar.dart' as utils;
 import 'package:yaladrive/features/favorites/domain/entities/favorite.dart';
 import 'package:yaladrive/features/favorites/presentation/bloc/favorites_bloc.dart';
 import 'package:yaladrive/features/favorites/presentation/widgets/favorite_car_card.dart';
@@ -79,16 +79,16 @@ class _FavoritesPageState extends State<FavoritesPage> {
       body: BlocConsumer<FavoritesBloc, FavoritesState>(
         listener: (context, state) {
           if (state is FavoritesError) {
-            showSnackBar(context, state.message);
+            utils.showSnackerbar(context, state.message);
           } else if (state is FavoritesLoaded) {
             _favorites = state.favorites;
             _loadCarDetails(state.favorites);
           } else if (state is FavoriteRemoved) {
-            showSnackBar(context, 'Removed from favorites');
+            utils.showSnackerbar(context, 'Removed from favorites');
             _loadFavorites();
           } else if (state is FavoriteToggled) {
             if (!state.isFavorited) {
-              showSnackBar(context, 'Removed from favorites');
+              utils.showSnackerbar(context, 'Removed from favorites');
             }
             _loadFavorites();
           }

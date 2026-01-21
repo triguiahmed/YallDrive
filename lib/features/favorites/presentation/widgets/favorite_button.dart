@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yaladrive/core/theme/app_pallete.dart';
+import 'package:yaladrive/features/favorites/presentation/bloc/favorites_bloc.dart';
 
 class FavoriteButton extends StatelessWidget {
   final bool isFavorited;
@@ -119,6 +121,67 @@ class _AnimatedFavoriteButtonState extends State<AnimatedFavoriteButton>
             size: widget.size,
           ),
         ),
+      ),
+    );
+  }
+}
+
+/// A favorite button that integrates with FavoritesBloc
+class BlocFavoriteButton extends StatefulWidget {
+  final String carNo;
+  final String userId;
+  final double size;
+
+  const BlocFavoriteButton({
+    super.key,
+    required this.carNo,
+    required this.userId,
+    this.size = 24,
+  });
+
+  @override
+  State<BlocFavoriteButton> createState() => _BlocFavoriteButtonState();
+}
+
+class _BlocFavoriteButtonState extends State<BlocFavoriteButton> {
+  bool _isFavorited = false;
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<FavoritesBloc>().add(
+          CheckIsFavoritedEvent(
+            userId: widget.userId,
+            carNo: widget.carNo,
+          ),
+        );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocListener<FavoritesBloc, FavoritesState>(
+      listener: (context, state) {
+        if (state is FavoriteStatusChecked && state.carNo == widget.carNo) {
+          setState(() {
+            _isFavorited = state.isFavorited;
+          });
+        } else if (state is FavoriteToggled && state.carNo == widget.carNo) {
+          setState(() {
+            _isFavorited = state.isFavorited;
+          });
+        }
+      },
+      child: AnimatedFavoriteButton(
+        isFavorited: _isFavorited,
+        size: widget.size,
+        onChanged: (newValue) {
+          context.read<FavoritesBloc>().add(
+                ToggleFavoriteEvent(
+                  userId: widget.userId,
+                  carNo: widget.carNo,
+                ),
+              );
+        },
       ),
     );
   }
