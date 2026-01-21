@@ -1,6 +1,6 @@
-import 'package:car_rental_app_clean_arch/core/error/failure.dart';
-import 'package:car_rental_app_clean_arch/core/usecase/usecase.dart';
-import 'package:car_rental_app_clean_arch/features/profile/domain/repositories/profile_repository.dart';
+import 'package:yalladrive/core/error/failure.dart';
+import 'package:yalladrive/core/usecase/usecase.dart';
+import 'package:yalladrive/features/profile/domain/repositories/profile_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
 class CheckCarBooked implements Usecase<void, CheckCarBookedParams> {

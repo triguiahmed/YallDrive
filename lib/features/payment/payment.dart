@@ -1,8 +1,8 @@
-import 'package:car_rental_app_clean_arch/core/common/widgets/loader.dart';
-import 'package:car_rental_app_clean_arch/core/constants/constants.dart';
-import 'package:car_rental_app_clean_arch/core/routes/app_routes.dart';
-import 'package:car_rental_app_clean_arch/features/booking/domain/entites/booking.dart';
-import 'package:car_rental_app_clean_arch/features/booking/presentation/bloc/booking_bloc.dart';
+import 'package:yalladrive/core/common/widgets/loader.dart';
+import 'package:yalladrive/core/constants/constants.dart';
+import 'package:yalladrive/core/routes/app_routes.dart';
+import 'package:yalladrive/features/booking/domain/entites/booking.dart';
+import 'package:yalladrive/features/booking/presentation/bloc/booking_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';

@@ -1,5 +1,5 @@
-import 'package:car_rental_app_clean_arch/core/error/failure.dart';
-import 'package:car_rental_app_clean_arch/core/usecase/usecase.dart';
+import 'package:yalladrive/core/error/failure.dart';
+import 'package:yalladrive/core/usecase/usecase.dart';
 import 'package:fpdart/fpdart.dart';
 
 class GetInitialData implements Usecase<bool, NoParams> {

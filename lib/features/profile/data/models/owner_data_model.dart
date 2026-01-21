@@ -1,5 +1,5 @@
-import 'package:car_rental_app_clean_arch/features/profile/domain/entities/owner_data.dart';
-import 'package:car_rental_app_clean_arch/features/register/data/models/car_details_model.dart';
+import 'package:yalladrive/features/profile/domain/entities/owner_data.dart';
+import 'package:yalladrive/features/register/data/models/car_details_model.dart';
 
 class OwnerDataModel extends OwnerData {
   OwnerDataModel({

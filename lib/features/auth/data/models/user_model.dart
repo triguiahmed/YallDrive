@@ -1,4 +1,4 @@
-import 'package:car_rental_app_clean_arch/core/common/entities/user.dart';
+import 'package:yalladrive/core/common/entities/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserModel extends User {

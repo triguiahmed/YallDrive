@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:car_rental_app_clean_arch/core/usecase/usecase.dart';
-import 'package:car_rental_app_clean_arch/features/splash/domain/usecases/usecases.dart';
+import 'package:yalladrive/core/usecase/usecase.dart';
+import 'package:yalladrive/features/splash/domain/usecases/usecases.dart';
 import 'package:flutter/material.dart';
 
 part 'splash_event.dart';

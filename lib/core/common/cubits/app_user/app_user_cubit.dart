@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:car_rental_app_clean_arch/core/common/entities/user.dart';
-import 'package:car_rental_app_clean_arch/core/error/exception.dart';
+import 'package:yalladrive/core/common/entities/user.dart';
+import 'package:yalladrive/core/error/exception.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:flutter/material.dart';

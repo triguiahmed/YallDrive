@@ -1,6 +1,6 @@
-import 'package:car_rental_app_clean_arch/core/constants/constants.dart';
-import 'package:car_rental_app_clean_arch/core/routes/app_routes.dart';
-import 'package:car_rental_app_clean_arch/core/utils/location_service.dart';
+import 'package:yalladrive/core/constants/constants.dart';
+import 'package:yalladrive/core/routes/app_routes.dart';
+import 'package:yalladrive/core/utils/location_service.dart';
 import 'package:flutter/material.dart';
 
 class BookingHeroSection extends StatefulWidget {

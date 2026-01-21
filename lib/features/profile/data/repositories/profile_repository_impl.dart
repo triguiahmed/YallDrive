@@ -1,11 +1,11 @@
 import 'dart:io';
 
-import 'package:car_rental_app_clean_arch/core/error/exception.dart';
-import 'package:car_rental_app_clean_arch/core/error/failure.dart';
-import 'package:car_rental_app_clean_arch/features/profile/data/datasources/profile_remote_data_sources.dart';
-import 'package:car_rental_app_clean_arch/features/profile/data/models/customer_data_model.dart';
-import 'package:car_rental_app_clean_arch/features/profile/data/models/owner_data_model.dart';
-import 'package:car_rental_app_clean_arch/features/profile/domain/repositories/profile_repository.dart';
+import 'package:yalladrive/core/error/exception.dart';
+import 'package:yalladrive/core/error/failure.dart';
+import 'package:yalladrive/features/profile/data/datasources/profile_remote_data_sources.dart';
+import 'package:yalladrive/features/profile/data/models/customer_data_model.dart';
+import 'package:yalladrive/features/profile/data/models/owner_data_model.dart';
+import 'package:yalladrive/features/profile/domain/repositories/profile_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
 class ProfileRepositoryImpl implements ProfileRepository {

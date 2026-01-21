@@ -4,12 +4,13 @@ import 'package:yalladrive/core/usecase/usecase.dart';
 import 'package:yalladrive/features/auth/domain/repositories/auth_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
-class CurrentUser implements Usecase<User, NoParams> {
+
+class GoogleSignIn implements Usecase<User, NoParams> {
   final AuthRepository authRepository;
-  CurrentUser(this.authRepository);
+  GoogleSignIn(this.authRepository);
 
   @override
   Future<Either<Failure, User>> call(NoParams params) async {
-    return await authRepository.currentUser();
+    return await authRepository.signInWithGoogle();
   }
 }

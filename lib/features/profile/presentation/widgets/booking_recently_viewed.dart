@@ -1,5 +1,5 @@
-import 'package:car_rental_app_clean_arch/core/common/entities/car_details.dart';
-import 'package:car_rental_app_clean_arch/features/profile/presentation/widgets/booking_car_card.dart';
+import 'package:yalladrive/core/common/entities/car_details.dart';
+import 'package:yalladrive/features/profile/presentation/widgets/booking_car_card.dart';
 import 'package:flutter/material.dart';
 
 class BookingRecentlyViewed extends StatelessWidget {

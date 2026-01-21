@@ -1,12 +1,12 @@
 import 'package:bloc/bloc.dart';
-import 'package:car_rental_app_clean_arch/features/booking/domain/entites/booking.dart';
-import 'package:car_rental_app_clean_arch/features/booking/domain/usecases/booking_car.dart';
-import 'package:car_rental_app_clean_arch/features/booking/domain/usecases/owner_request_approve.dart';
-import 'package:car_rental_app_clean_arch/features/booking/domain/usecases/payment_approve.dart';
+import 'package:yalladrive/features/booking/domain/entites/booking.dart';
+import 'package:yalladrive/features/booking/domain/usecases/booking_car.dart';
+import 'package:yalladrive/features/booking/domain/usecases/owner_request_approve.dart';
+import 'package:yalladrive/features/booking/domain/usecases/payment_approve.dart';
 
-import 'package:car_rental_app_clean_arch/features/booking/domain/usecases/show_booking_for_car.dart';
-import 'package:car_rental_app_clean_arch/features/booking/domain/usecases/show_booking_for_owner.dart';
-import 'package:car_rental_app_clean_arch/features/booking/domain/usecases/show_booking_for_user.dart';
+import 'package:yalladrive/features/booking/domain/usecases/show_booking_for_car.dart';
+import 'package:yalladrive/features/booking/domain/usecases/show_booking_for_owner.dart';
+import 'package:yalladrive/features/booking/domain/usecases/show_booking_for_user.dart';
 import 'package:flutter/material.dart';
 
 part 'booking_event.dart';

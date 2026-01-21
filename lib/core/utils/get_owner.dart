@@ -1,5 +1,5 @@
-import 'package:car_rental_app_clean_arch/core/error/exception.dart';
-import 'package:car_rental_app_clean_arch/features/profile/data/models/owner_data_model.dart';
+import 'package:yalladrive/core/error/exception.dart';
+import 'package:yalladrive/features/profile/data/models/owner_data_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 Future<OwnerDataModel> getOwner(String ownerId) async {

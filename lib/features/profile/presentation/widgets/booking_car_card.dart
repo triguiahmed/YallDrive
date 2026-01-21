@@ -1,5 +1,5 @@
-import 'package:car_rental_app_clean_arch/core/common/entities/car_details.dart';
-import 'package:car_rental_app_clean_arch/core/routes/app_routes.dart';
+import 'package:yalladrive/core/common/entities/car_details.dart';
+import 'package:yalladrive/core/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 
 class BookingCarCard extends StatelessWidget {

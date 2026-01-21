@@ -1,12 +1,12 @@
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
-import 'package:car_rental_app_clean_arch/core/common/entities/car_details.dart';
-import 'package:car_rental_app_clean_arch/core/usecase/usecase.dart';
-import 'package:car_rental_app_clean_arch/features/register/domain/usecases/get_all_cars.dart';
-import 'package:car_rental_app_clean_arch/features/register/domain/usecases/get_car_by_id.dart';
-import 'package:car_rental_app_clean_arch/features/register/domain/usecases/get_cars_by_location.dart';
-import 'package:car_rental_app_clean_arch/features/register/domain/usecases/register_car_details.dart';
+import 'package:yalladrive/core/common/entities/car_details.dart';
+import 'package:yalladrive/core/usecase/usecase.dart';
+import 'package:yalladrive/features/register/domain/usecases/get_all_cars.dart';
+import 'package:yalladrive/features/register/domain/usecases/get_car_by_id.dart';
+import 'package:yalladrive/features/register/domain/usecases/get_cars_by_location.dart';
+import 'package:yalladrive/features/register/domain/usecases/register_car_details.dart';
 import 'package:flutter/material.dart';
 
 part 'register_event.dart';

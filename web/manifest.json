@@ -1,6 +1,6 @@
 {
-    "name": "car_rental_app_clean_arch",
-    "short_name": "car_rental_app_clean_arch",
+    "name": "yalladrive",
+    "short_name": "yalladrive",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

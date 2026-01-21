@@ -1,7 +1,7 @@
-import 'package:car_rental_app_clean_arch/core/constants/constants.dart';
-import 'package:car_rental_app_clean_arch/core/routes/app_routes.dart';
-import 'package:car_rental_app_clean_arch/core/theme/app_pallete.dart';
-import 'package:car_rental_app_clean_arch/core/utils/custom_elevated_button.dart';
+import 'package:yalladrive/core/constants/constants.dart';
+import 'package:yalladrive/core/routes/app_routes.dart';
+import 'package:yalladrive/core/theme/app_pallete.dart';
+import 'package:yalladrive/core/utils/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {

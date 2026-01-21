@@ -1,11 +1,11 @@
-import 'package:car_rental_app_clean_arch/core/common/cubits/app_user/app_user_cubit.dart';
-import 'package:car_rental_app_clean_arch/core/common/widgets/loader.dart';
-import 'package:car_rental_app_clean_arch/core/routes/app_routes.dart';
-import 'package:car_rental_app_clean_arch/core/utils/show_snackerbar.dart';
-import 'package:car_rental_app_clean_arch/features/profile/domain/entities/owner_data.dart';
-import 'package:car_rental_app_clean_arch/features/profile/presentation/bloc/profile_bloc.dart';
-import 'package:car_rental_app_clean_arch/features/profile/presentation/pages/owner/owner.dart';
-import 'package:car_rental_app_clean_arch/features/profile/presentation/pages/scaffold_page.dart';
+import 'package:yalladrive/core/common/cubits/app_user/app_user_cubit.dart';
+import 'package:yalladrive/core/common/widgets/loader.dart';
+import 'package:yalladrive/core/routes/app_routes.dart';
+import 'package:yalladrive/core/utils/show_snackerbar.dart';
+import 'package:yalladrive/features/profile/domain/entities/owner_data.dart';
+import 'package:yalladrive/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:yalladrive/features/profile/presentation/pages/owner/owner.dart';
+import 'package:yalladrive/features/profile/presentation/pages/scaffold_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

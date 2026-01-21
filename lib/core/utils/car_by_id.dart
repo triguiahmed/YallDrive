@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:car_rental_app_clean_arch/core/error/exception.dart';
-import 'package:car_rental_app_clean_arch/features/register/data/models/car_details_model.dart';
+import 'package:yalladrive/core/error/exception.dart';
+import 'package:yalladrive/features/register/data/models/car_details_model.dart';
 
 Future<CarDetailsModel> fetchCarById(String carNo) async {
   final FirebaseFirestore fireStore = FirebaseFirestore.instance; 

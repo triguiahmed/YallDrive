@@ -1,4 +1,4 @@
-import 'package:car_rental_app_clean_arch/features/profile/domain/entities/customer_data.dart';
+import 'package:yalladrive/features/profile/domain/entities/customer_data.dart';
 
 class CustomerDataModel extends CustomerData {
   CustomerDataModel({

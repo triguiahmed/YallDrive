@@ -1,8 +1,8 @@
-import 'package:car_rental_app_clean_arch/core/error/exception.dart';
-import 'package:car_rental_app_clean_arch/core/error/failure.dart';
-import 'package:car_rental_app_clean_arch/features/auth/data/datasources/auth_remote_data_source.dart';
-import 'package:car_rental_app_clean_arch/core/common/entities/user.dart';
-import 'package:car_rental_app_clean_arch/features/auth/domain/repositories/auth_repository.dart';
+import 'package:yalladrive/core/error/exception.dart';
+import 'package:yalladrive/core/error/failure.dart';
+import 'package:yalladrive/features/auth/data/datasources/auth_remote_data_source.dart';
+import 'package:yalladrive/core/common/entities/user.dart';
+import 'package:yalladrive/features/auth/domain/repositories/auth_repository.dart';
 import 'package:fpdart/fpdart.dart';
 
 class AuthRepositoryImpl implements AuthRepository {

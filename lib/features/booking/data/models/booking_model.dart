@@ -1,4 +1,4 @@
-import 'package:car_rental_app_clean_arch/features/booking/domain/entites/booking.dart';
+import 'package:yalladrive/features/booking/domain/entites/booking.dart';
 
 class BookingModel extends Booking {
   BookingModel({

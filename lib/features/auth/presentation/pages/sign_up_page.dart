@@ -1,11 +1,11 @@
-import 'package:car_rental_app_clean_arch/core/common/cubits/app_user/app_user_cubit.dart';
-import 'package:car_rental_app_clean_arch/core/common/widgets/loader.dart';
-import 'package:car_rental_app_clean_arch/core/routes/app_routes.dart';
-import 'package:car_rental_app_clean_arch/core/theme/app_pallete.dart';
-import 'package:car_rental_app_clean_arch/core/utils/custom_elevated_button.dart';
-import 'package:car_rental_app_clean_arch/core/utils/show_snackerbar.dart';
-import 'package:car_rental_app_clean_arch/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:car_rental_app_clean_arch/features/auth/presentation/widgets/auth_field.dart';
+import 'package:yalladrive/core/common/cubits/app_user/app_user_cubit.dart';
+import 'package:yalladrive/core/common/widgets/loader.dart';
+import 'package:yalladrive/core/routes/app_routes.dart';
+import 'package:yalladrive/core/theme/app_pallete.dart';
+import 'package:yalladrive/core/utils/custom_elevated_button.dart';
+import 'package:yalladrive/core/utils/show_snackerbar.dart';
+import 'package:yalladrive/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:yalladrive/features/auth/presentation/widgets/auth_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

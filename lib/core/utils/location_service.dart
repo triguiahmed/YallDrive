@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:car_rental_app_clean_arch/core/secrets/app_secrets.dart';
+import 'package:yalladrive/core/secrets/app_secrets.dart';
 import 'package:http/http.dart' as http;
 
 class LocationService {

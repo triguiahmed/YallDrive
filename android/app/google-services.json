@@ -1,21 +1,40 @@
 {
   "project_info": {
-    "project_number": "1069914349598",
-    "project_id": "carrentalapp-33363",
-    "storage_bucket": "carrentalapp-33363.firebasestorage.app"
+    "project_number": "771255612100",
+    "project_id": "yalladrive-b4b66",
+    "storage_bucket": "yalladrive-b4b66.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1069914349598:android:cd3556bc69106d7df80e0f",
+        "mobilesdk_app_id": "1:771255612100:android:73e66672d29d3e5ef20f91",
         "android_client_info": {
-          "package_name": "com.example.car_rental_app_clean_arch"
+          "package_name": "com.example.yalladrive"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyD6FlUDtgZjPsoZbRWLP7z3LOH_2b2VnhU"
+          "current_key": "AIzaSyDZsI_BLd_ibA2imJvAj8KB410FTg38QVU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:771255612100:android:641a3d0047e46cb4f20f91",
+        "android_client_info": {
+          "package_name": "com.yourcompany.yalladrive"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZsI_BLd_ibA2imJvAj8KB410FTg38QVU"
         }
       ],
       "services": {
