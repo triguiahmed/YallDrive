@@ -85,19 +85,19 @@ class _CarReviewsPageState extends State<CarReviewsPage> {
       body: BlocConsumer<ReviewBloc, ReviewState>(
         listener: (context, state) {
           if (state is ReviewError) {
-            showSnackBar(context, state.message);
+            utils.showSnackerbar(context, state.message);
           } else if (state is ReviewsLoaded) {
             _reviews = state.reviews;
             _calculateAverageRating();
             _loadUserNames(state.reviews);
           } else if (state is ReviewCreated) {
-            showSnackBar(context, 'Review added successfully!');
+            utils.showSnackerbar(context, 'Review added successfully!');
             _loadReviews();
           } else if (state is ReviewUpdated) {
-            showSnackBar(context, 'Review updated successfully!');
+            utils.showSnackerbar(context, 'Review updated successfully!');
             _loadReviews();
           } else if (state is ReviewDeleted) {
-            showSnackBar(context, 'Review deleted successfully!');
+            utils.showSnackerbar(context, 'Review deleted successfully!');
             _loadReviews();
           }
         },
@@ -209,44 +209,26 @@ class _CarReviewsPageState extends State<CarReviewsPage> {
     return Column(children: distribution);
   }
 
-  void _showAddReviewDialog() async {
-    final result = await showDialog<Map<String, dynamic>>(
-      context: context,
-      builder: (context) => const AddReviewDialog(),
-    );
-
-    if (result != null && mounted) {
-      context.read<ReviewBloc>().add(
-            CreateReviewEvent(
-              carNo: widget.carNo,
-              userId: widget.currentUserId,
-              rating: result['rating'] as int,
-              comment: result['comment'] as String,
-            ),
-          );
-    }
-  }
-
-  void _showEditReviewDialog(Review review) async {
-    final result = await showDialog<Map<String, dynamic>>(
+  void _showAddReviewDialog() {
+    showDialog(
       context: context,
       builder: (context) => AddReviewDialog(
-        isEditing: true,
-        initialRating: review.rating,
-        initialComment: review.comment,
+        carNo: widget.carNo,
+        userId: widget.currentUserId,
+        onReviewSubmitted: _loadReviews,
       ),
     );
+  }
 
-    if (result != null && mounted) {
-      context.read<ReviewBloc>().add(
-            UpdateReviewEvent(
-              reviewId: review.id,
-              userId: widget.currentUserId,
-              rating: result['rating'] as int,
-              comment: result['comment'] as String,
-            ),
-          );
-    }
+  void _showEditReviewDialog(Review review) {
+    showDialog(
+      context: context,
+      builder: (context) => AddReviewDialog(
+        userId: widget.currentUserId,
+        existingReview: review,
+        onReviewSubmitted: _loadReviews,
+      ),
+    );
   }
 
   void _confirmDeleteReview(Review review) {
