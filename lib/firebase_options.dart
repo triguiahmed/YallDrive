@@ -23,20 +23,11 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -50,20 +41,46 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCxRzNJ5vgt4Nyy_i7x6GaPglsaLlpgXWw',
-    appId: '1:1069914349598:web:d54f6293f635f98af80e0f',
-    messagingSenderId: '1069914349598',
-    projectId: 'carrentalapp-33363',
-    authDomain: 'carrentalapp-33363.firebaseapp.com',
-    storageBucket: 'carrentalapp-33363.firebasestorage.app',
-    measurementId: 'G-K1SBQCRX4S',
+    apiKey: 'AIzaSyDjxtAqCERV2levmXmHQoqnK8U6BMNtCng',
+    appId: '1:771255612100:web:d02b17d6ca8b8debf20f91',
+    messagingSenderId: '771255612100',
+    projectId: 'yalladrive-b4b66',
+    authDomain: 'yalladrive-b4b66.firebaseapp.com',
+    storageBucket: 'yalladrive-b4b66.firebasestorage.app',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyD6FlUDtgZjPsoZbRWLP7z3LOH_2b2VnhU',
-    appId: '1:1069914349598:android:cd3556bc69106d7df80e0f',
-    messagingSenderId: '1069914349598',
-    projectId: 'carrentalapp-33363',
-    storageBucket: 'carrentalapp-33363.firebasestorage.app',
+    apiKey: 'AIzaSyDZsI_BLd_ibA2imJvAj8KB410FTg38QVU',
+    appId: '1:771255612100:android:73e66672d29d3e5ef20f91',
+    messagingSenderId: '771255612100',
+    projectId: 'yalladrive-b4b66',
+    storageBucket: 'yalladrive-b4b66.firebasestorage.app',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyDes_NEzg54vUy-qPH0x7n0OfRdouR1Wa4',
+    appId: '1:771255612100:ios:98647adce167cb28f20f91',
+    messagingSenderId: '771255612100',
+    projectId: 'yalladrive-b4b66',
+    storageBucket: 'yalladrive-b4b66.firebasestorage.app',
+    iosBundleId: 'com.example.yalladrive',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyDes_NEzg54vUy-qPH0x7n0OfRdouR1Wa4',
+    appId: '1:771255612100:ios:98647adce167cb28f20f91',
+    messagingSenderId: '771255612100',
+    projectId: 'yalladrive-b4b66',
+    storageBucket: 'yalladrive-b4b66.firebasestorage.app',
+    iosBundleId: 'com.example.yalladrive',
+  );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyDjxtAqCERV2levmXmHQoqnK8U6BMNtCng',
+    appId: '1:771255612100:web:7c2e40c9ec4cdc78f20f91',
+    messagingSenderId: '771255612100',
+    projectId: 'yalladrive-b4b66',
+    authDomain: 'yalladrive-b4b66.firebaseapp.com',
+    storageBucket: 'yalladrive-b4b66.firebasestorage.app',
   );
 }

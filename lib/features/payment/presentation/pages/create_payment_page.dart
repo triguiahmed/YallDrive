@@ -41,7 +41,7 @@ class _CreatePaymentPageState extends State<CreatePaymentPage> {
         listener: (context, state) {
           if (state is PaymentError) {
             setState(() => _isProcessing = false);
-            showSnackBar(context, state.message);
+            showSnackerbar(context, state.message);
           } else if (state is PaymentCreated) {
             setState(() => _isProcessing = false);
             _showSuccessDialog(state.payment);
