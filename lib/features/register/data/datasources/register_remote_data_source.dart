@@ -10,7 +10,7 @@ abstract interface class RegisterRemoteDataSource {
     required String carName,
     required String carNumber,
     required double pricePerDay,
-    required File carImage,
+    File? carImage,
     required String ownerId,
   });
 
@@ -40,13 +40,17 @@ class RegistorRemoteDataSourceImpl implements RegisterRemoteDataSource {
     required String carName,
     required String carNumber,
     required double pricePerDay,
-    required File carImage,
+    File? carImage,
     required String ownerId,
   }) async {
     try {
-      final ref = fireStorage.ref().child('car_images/$carNumber.jpg');
-      final uploadTask = await ref.putFile(carImage);
-      final carImageUrl = await uploadTask.ref.getDownloadURL();
+      String carImageUrl = 'https://via.placeholder.com/400x300.png?text=No+Image';
+      
+      if (carImage != null) {
+        final ref = fireStorage.ref().child('car_images/$carNumber.jpg');
+        final uploadTask = await ref.putFile(carImage);
+        carImageUrl = await uploadTask.ref.getDownloadURL();
+      }
 
       final carDetails = CarDetailsModel(
         location: location,

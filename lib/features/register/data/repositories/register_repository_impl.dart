@@ -18,7 +18,7 @@ class RegisterRepositoryImpl implements RegisterRepository {
     required String carName,
     required String carNumber,
     required double pricePerDay,
-    required File carImage,
+    File? carImage,
     required String ownerId,
   }) async {
     try {
