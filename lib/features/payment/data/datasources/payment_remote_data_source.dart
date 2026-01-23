@@ -97,6 +97,24 @@ class PaymentRemoteDataSourceImpl implements PaymentRemoteDataSource {
           .get();
 
       if (existingPayment.docs.isNotEmpty) {
+        final existingDoc = existingPayment.docs.first;
+        final existingStatus = existingDoc.data()['status'];
+        
+        // Allow updating if previous payment failed or is pending
+        if (existingStatus == 'failed' || existingStatus == 'pending') {
+          final payment = PaymentModel(
+            id: existingDoc.id,
+            bookingId: bookingId,
+            userId: userId,
+            amount: amount,
+            method: method,
+            status: status,
+            createdAt: DateTime.now(),
+          );
+          await existingDoc.reference.set(payment.toJson());
+          return payment;
+        }
+        
         throw ServerException('Payment already exists for this booking');
       }
 

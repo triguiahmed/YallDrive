@@ -3,6 +3,8 @@ import 'package:yaladrive/core/constants/constants.dart';
 import 'package:yaladrive/core/routes/app_routes.dart';
 import 'package:yaladrive/features/booking/domain/entites/booking.dart';
 import 'package:yaladrive/features/booking/presentation/bloc/booking_bloc.dart';
+import 'package:yaladrive/features/payment/domain/entities/payment.dart';
+import 'package:yaladrive/features/payment/presentation/bloc/payment_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
@@ -79,6 +81,16 @@ class _PaymentScreenState extends State<PaymentScreen> {
       ),
     );
 
+    context.read<PaymentBloc>().add(
+          CreatePaymentEvent(
+            bookingId: booking!.id,
+            userId: booking!.userId,
+            amount: booking!.price,
+            method: PaymentMethod.card,
+            status: PaymentStatus.paid,
+          ),
+        );
+
     Future.delayed(const Duration(seconds: 3), () {
       if (mounted) {
         setState(() => _isProcessing = false);
@@ -102,6 +114,16 @@ class _PaymentScreenState extends State<PaymentScreen> {
         paymentStatus: 'Failed',
       ),
     );
+
+    context.read<PaymentBloc>().add(
+          CreatePaymentEvent(
+            bookingId: booking!.id,
+            userId: booking!.userId,
+            amount: booking!.price,
+            method: PaymentMethod.card,
+            status: PaymentStatus.failed,
+          ),
+        );
 
     Future.delayed(const Duration(seconds: 3), () {
       if (mounted) {

@@ -87,7 +87,7 @@ service cloud.firestore {
       allow create: if isAuthenticated() && 
                        request.resource.data.userId == request.auth.uid &&
                        isValidPaymentMethod(request.resource.data.method) &&
-                       request.resource.data.status == 'pending';
+                       isValidPaymentStatus(request.resource.data.status);
       
       // Users can update their own payments
       // Status transitions must be valid
