@@ -23,6 +23,11 @@ abstract interface class ReviewRepository {
     required String carNo,
   });
 
+  /// Get all reviews for a list of cars
+  Future<Either<Failure, List<Review>>> getReviewsForCars({
+    required List<String> carNos,
+  });
+
   /// Get all reviews by a specific user
   Future<Either<Failure, List<Review>>> getReviewsByUser({
     required String userId,

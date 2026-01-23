@@ -59,6 +59,20 @@ class ReviewRepositoryImpl implements ReviewRepository {
   }
 
   @override
+  Future<Either<Failure, List<Review>>> getReviewsForCars({
+    required List<String> carNos,
+  }) async {
+    try {
+      final reviews = await reviewRemoteDataSource.getReviewsForCars(
+        carNos: carNos,
+      );
+      return Right(reviews);
+    } on ServerException catch (e) {
+      return Left(Failure(e.message));
+    }
+  }
+
+  @override
   Future<Either<Failure, List<Review>>> getReviewsByUser({
     required String userId,
   }) async {

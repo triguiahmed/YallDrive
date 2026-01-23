@@ -322,6 +322,11 @@ void _initReview() {
         serviceLocator(),
       ),
     )
+    ..registerFactory<GetReviewsForCars>(
+      () => GetReviewsForCars(
+        serviceLocator(),
+      ),
+    )
     ..registerFactory<GetReviewsByUser>(
       () => GetReviewsByUser(
         serviceLocator(),
@@ -346,6 +351,7 @@ void _initReview() {
       () => ReviewBloc(
         createReview: serviceLocator(),
         getReviewsForCar: serviceLocator(),
+        getReviewsForCars: serviceLocator(),
         getReviewsByUser: serviceLocator(),
         updateReview: serviceLocator(),
         deleteReview: serviceLocator(),
