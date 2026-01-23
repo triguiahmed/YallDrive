@@ -251,7 +251,7 @@ class _LiveChatScreenState extends State<LiveChatScreen> {
     );
 
     if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
+      final data = jsonDecode(utf8.decode(response.bodyBytes));
       return data['choices'][0]['message']['content'];
     } else {
       throw Exception('Failed to get response: ${response.statusCode}');
