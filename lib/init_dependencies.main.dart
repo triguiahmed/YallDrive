@@ -10,6 +10,7 @@ Future<void> initDependencies() async {
     () => AppUserCubit(
       serviceLocator(),
       serviceLocator(),
+      messaging: serviceLocator(),
     ),
   );
 
@@ -48,52 +49,12 @@ Future<void> _initFirebase() async {
     () => firebaseMessaging,
   );
 
-  await _initializeFirebaseMessaging();
-}
-
-Future<void> _initializeFirebaseMessaging() async {
-  final messaging = serviceLocator<FirebaseMessaging>();
-
-  // Request notification permissions
-  NotificationSettings settings = await messaging.requestPermission(
-    alert: true,
-    badge: true,
-    sound: true,
+  // Notification Service
+  serviceLocator.registerLazySingleton<NotificationService>(
+    () => NotificationService(serviceLocator()),
   );
 
-  if (settings.authorizationStatus == AuthorizationStatus.denied) {
-    debugPrint("❌ User denied push notifications.");
-    return;
-  }
-
-  // Retrieve FCM Token
-  String? fcmToken = await messaging.getToken();
-  if (fcmToken != null) {
-    debugPrint("✅ FCM Token: $fcmToken");
-    // Send this token to your backend for user-device mapping
-  } else {
-    debugPrint("⚠️ Failed to get FCM Token");
-  }
-
-  // subcribe
-  messaging.subscribeToTopic('user');
-
-  // Handle foreground notifications
-  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    debugPrint("📩 Foreground Notification: ${message.notification?.title}");
-  });
-
-  // Handle when app is opened via notification
-  FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-    debugPrint("🔄 App opened from notification.");
-  });
-
-  // Handle when app is launched from a notification
-  RemoteMessage? initialMessage = await messaging.getInitialMessage();
-  if (initialMessage != null) {
-    debugPrint(
-        "🚀 App launched from notification: ${initialMessage.notification?.title}");
-  }
+  await serviceLocator<NotificationService>().initialize();
 }
 
 Future<void> _initHive() async {
