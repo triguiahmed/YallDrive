@@ -4,7 +4,7 @@ import 'package:yaladrive/core/usecase/usecase.dart';
 import 'package:yaladrive/features/review/domain/entities/review.dart';
 import 'package:yaladrive/features/review/domain/repositories/review_repository.dart';
 
-class GetReviewsForCars implements UseCase<List<Review>, GetReviewsForCarsParams> {
+class GetReviewsForCars implements Usecase<List<Review>, GetReviewsForCarsParams> {
   final ReviewRepository reviewRepository;
 
   GetReviewsForCars(this.reviewRepository);
