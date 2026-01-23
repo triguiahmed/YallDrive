@@ -8,7 +8,7 @@ class RegisterCar extends RegisterEvent {
   final String carName;
   final String carNumber;
   final double pricePerDay;
-  final File? carImage;
+  final File carImage;
   final String ownerId;
 
   RegisterCar({
@@ -16,7 +16,7 @@ class RegisterCar extends RegisterEvent {
     required this.carName,
     required this.carNumber,
     required this.pricePerDay,
-    this.carImage,
+    required this.carImage,
     required this.ownerId,
   });
 }

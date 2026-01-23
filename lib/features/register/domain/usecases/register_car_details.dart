@@ -28,15 +28,15 @@ class CarDetailsParams {
   final String carName;
   final String carNumber;
   final double pricePerDay;
-  final File? carImage;
+  final File carImage;
   final String ownerId;
 
-  RegisterCarDetailsParams({
+  CarDetailsParams({
     required this.location,
     required this.carName,
     required this.carNumber,
     required this.pricePerDay,
-    this.carImage,
+    required this.carImage,
     required this.ownerId,
   });
 }

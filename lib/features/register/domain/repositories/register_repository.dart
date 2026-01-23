@@ -10,7 +10,7 @@ abstract interface class RegisterRepository {
     required String carName,
     required String carNumber,
     required double pricePerDay,
-    File? carImage,
+    required File carImage,
     required String ownerId,
   });
 
