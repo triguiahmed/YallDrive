@@ -63,7 +63,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           }
           if (state is ProfileCustomerDataSuccess) {
             _nameController.text = state.customerData.name;
-            return Padding(
+            return SingleChildScrollView(
               padding: EdgeInsets.all(16.0),
               child: Form(
                 key: _formKey,
