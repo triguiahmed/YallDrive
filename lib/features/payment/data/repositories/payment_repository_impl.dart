@@ -16,6 +16,7 @@ class PaymentRepositoryImpl implements PaymentRepository {
     required String userId,
     required double amount,
     required PaymentMethod method,
+    PaymentStatus status = PaymentStatus.pending,
   }) async {
     try {
       final payment = await paymentRemoteDataSource.createPayment(
@@ -23,6 +24,7 @@ class PaymentRepositoryImpl implements PaymentRepository {
         userId: userId,
         amount: amount,
         method: method,
+        status: status,
       );
       return Right(payment);
     } on ServerException catch (e) {

@@ -345,6 +345,7 @@ class _CreatePaymentPageState extends State<CreatePaymentPage> {
             userId: widget.userId,
             amount: widget.amount,
             method: _selectedMethod,
+            status: PaymentStatus.paid,
           ),
         );
   }

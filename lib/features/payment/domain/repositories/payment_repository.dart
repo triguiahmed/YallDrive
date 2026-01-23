@@ -11,6 +11,7 @@ abstract interface class PaymentRepository {
     required String userId,
     required double amount,
     required PaymentMethod method,
+    PaymentStatus status = PaymentStatus.pending,
   });
 
   /// Get a payment by its ID

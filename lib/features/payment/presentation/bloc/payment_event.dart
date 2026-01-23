@@ -8,12 +8,14 @@ final class CreatePaymentEvent extends PaymentEvent {
   final String userId;
   final double amount;
   final PaymentMethod method;
+  final PaymentStatus status;
 
   CreatePaymentEvent({
     required this.bookingId,
     required this.userId,
     required this.amount,
     required this.method,
+    this.status = PaymentStatus.pending,
   });
 }
 

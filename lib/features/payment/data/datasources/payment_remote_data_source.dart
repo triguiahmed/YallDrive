@@ -9,6 +9,7 @@ abstract interface class PaymentRemoteDataSource {
     required String userId,
     required double amount,
     required PaymentMethod method,
+    PaymentStatus status = PaymentStatus.pending,
   });
 
   Future<PaymentModel> getPaymentById({
@@ -62,6 +63,7 @@ class PaymentRemoteDataSourceImpl implements PaymentRemoteDataSource {
     required String userId,
     required double amount,
     required PaymentMethod method,
+    PaymentStatus status = PaymentStatus.pending,
   }) async {
     try {
       // Check if booking exists
@@ -106,7 +108,7 @@ class PaymentRemoteDataSourceImpl implements PaymentRemoteDataSource {
         userId: userId,
         amount: amount,
         method: method,
-        status: PaymentStatus.pending,
+        status: status,
         createdAt: DateTime.now(),
       );
 

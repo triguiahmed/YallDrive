@@ -16,6 +16,7 @@ class CreatePayment implements Usecase<Payment, CreatePaymentParams> {
       userId: params.userId,
       amount: params.amount,
       method: params.method,
+      status: params.status,
     );
   }
 }
@@ -25,11 +26,13 @@ class CreatePaymentParams {
   final String userId;
   final double amount;
   final PaymentMethod method;
+  final PaymentStatus status;
 
   CreatePaymentParams({
     required this.bookingId,
     required this.userId,
     required this.amount,
     required this.method,
+    this.status = PaymentStatus.pending,
   });
 }
