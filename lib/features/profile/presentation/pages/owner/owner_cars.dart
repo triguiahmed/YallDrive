@@ -55,7 +55,7 @@ class _OwnerCarsState extends State<OwnerCars> {
       currentIndex: 2,
       bottomNavItems: Owner.bottomNavbarItems,
       routes: Owner.routes,
-      title: 'Your Cars',
+      title: 'Your Vehicles',
       child: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(

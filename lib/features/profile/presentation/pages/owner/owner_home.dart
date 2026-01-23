@@ -137,7 +137,7 @@ class _OwnerHomeState extends State<OwnerHome> {
                             ),
                           ),
                           Text(
-                            'Registered Cars',
+                            'Registered Vehicles',
                             style: TextStyle(
                               fontSize: 18,
                               color: Colors.white.withOpacity(0.9),
@@ -189,7 +189,7 @@ class _OwnerHomeState extends State<OwnerHome> {
                           Icon(Icons.add_circle_outline, color: Colors.white),
                           SizedBox(width: 8),
                           Text(
-                            'Register New Car',
+                            'Register New Vehicle',
                             style: TextStyle(
                               fontSize: 18,
                               color: Colors.white,

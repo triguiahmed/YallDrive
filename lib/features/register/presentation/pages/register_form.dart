@@ -100,7 +100,7 @@ class _RegisterFormState extends State<RegisterForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('List Your Car')),
+      appBar: AppBar(title: const Text('List Your Vehicle')),
       body: BlocConsumer<RegisterBloc, RegisterState>(
         listener: (context, state) {
           if (state is RegisterFailure) {
@@ -173,14 +173,14 @@ class _RegisterFormState extends State<RegisterForm> {
                     const SizedBox(height: 20),
                     RegisterField(
                       controller: carNameController,
-                      label: 'Car Name',
+                      label: 'Vehicle Name',
                       validator: (value) =>
                           value!.isEmpty ? 'Enter car name' : null,
                     ),
                     const SizedBox(height: 10),
                     RegisterField(
                       controller: carNumberController,
-                      label: 'Car Number',
+                      label: 'Vehicle Number',
                       validator: (value) =>
                           value!.isEmpty ? 'Enter car number' : null,
                     ),
@@ -228,7 +228,7 @@ class _RegisterFormState extends State<RegisterForm> {
                                     ),
                                     SizedBox(height: 15),
                                     Text(
-                                      'Select your image (Optional)',
+                                      'Select your image',
                                       style: TextStyle(
                                         fontSize: 15,
                                         color: Colors.grey,
