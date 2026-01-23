@@ -23,6 +23,7 @@ class CustomerBooking extends StatefulWidget {
 
 class _CustomerBookingState extends State<CustomerBooking> {
   List<Booking> bookings = [];
+  String filterStatus = 'All';
 
   @override
   void initState() {
@@ -37,6 +38,11 @@ class _CustomerBookingState extends State<CustomerBooking> {
 
   @override
   Widget build(BuildContext context) {
+    List<Booking> filteredBookings = bookings.where((booking) {
+      if (filterStatus == 'All') return true;
+      return booking.status == filterStatus;
+    }).toList();
+
     return ScaffoldPage(
       currentIndex: 1,
       bottomNavItems: Customer.bottomNavbarItems,
@@ -57,54 +63,79 @@ class _CustomerBookingState extends State<CustomerBooking> {
             return const Loader();
           }
 
-          if (bookings.isEmpty) {
-            return const Center(child: Text('No bookings available.'));
-          }
+          return Column(
+            children: [
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.all(10.0),
+                child: Row(
+                  children: ['All', 'Confirmed', 'Pending', 'Denied']
+                      .map((status) => Padding(
+                            padding: const EdgeInsets.only(right: 8.0),
+                            child: FilterChip(
+                              label: Text(status),
+                              selected: filterStatus == status,
+                              onSelected: (selected) {
+                                setState(() {
+                                  filterStatus = status;
+                                });
+                              },
+                            ),
+                          ))
+                      .toList(),
+                ),
+              ),
+              Expanded(
+                child: filteredBookings.isEmpty
+                    ? const Center(child: Text('No bookings available.'))
+                    : ListView.builder(
+                        padding: const EdgeInsets.all(10.0),
+                        itemCount: filteredBookings.length,
+                        itemBuilder: (context, index) {
+                          final booking = filteredBookings[index];
 
-          return ListView.builder(
-            padding: const EdgeInsets.all(10.0),
-            itemCount: bookings.length,
-            itemBuilder: (context, index) {
-              final booking = bookings[index];
+                          return FutureBuilder<CarDetailsModel>(
+                            future: fetchCarById(booking.carNo),
+                            builder: (context, carSnapshot) {
+                              if (carSnapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return Loader();
+                              } else if (carSnapshot.hasError) {
+                                return BookingError(
+                                  message: "Error loading car details",
+                                );
+                              } else if (!carSnapshot.hasData) {
+                                return SizedBox();
+                              }
 
-              return FutureBuilder<CarDetailsModel>(
-                future: fetchCarById(booking.carNo),
-                builder: (context, carSnapshot) {
-                  if (carSnapshot.connectionState == ConnectionState.waiting) {
-                    return Loader();
-                  } else if (carSnapshot.hasError) {
-                    return BookingError(
-                      message: "Error loading car details",
-                    );
-                  } else if (!carSnapshot.hasData) {
-                    return SizedBox(); 
-                  }
+                              final car = carSnapshot.data!;
 
-                  final car = carSnapshot.data!;
+                              return FutureBuilder<OwnerDataModel>(
+                                future: getOwner(car.ownerId),
+                                builder: (context, ownerSnapshot) {
+                                  String ownerName = "Loading...";
+                                  if (ownerSnapshot.connectionState ==
+                                      ConnectionState.done) {
+                                    if (ownerSnapshot.hasError) {
+                                      ownerName = "Owner not found";
+                                    } else if (ownerSnapshot.hasData) {
+                                      ownerName = ownerSnapshot.data!.name;
+                                    }
+                                  }
 
-                  return FutureBuilder<OwnerDataModel>(
-                    future: getOwner(car.ownerId),
-                    builder: (context, ownerSnapshot) {
-                      String ownerName = "Loading...";
-                      if (ownerSnapshot.connectionState ==
-                          ConnectionState.done) {
-                        if (ownerSnapshot.hasError) {
-                          ownerName = "Owner not found";
-                        } else if (ownerSnapshot.hasData) {
-                          ownerName = ownerSnapshot.data!.name;
-                        }
-                      }
-                      
-                      return BookingCard(
-                        booking: booking,
-                        car: car,
-                        ownerName: ownerName,
-                      );
-                    },
-                  );
-                },
-              );
-            },
+                                  return BookingCard(
+                                    booking: booking,
+                                    car: car,
+                                    ownerName: ownerName,
+                                  );
+                                },
+                              );
+                            },
+                          );
+                        },
+                      ),
+              ),
+            ],
           );
         },
       ),
