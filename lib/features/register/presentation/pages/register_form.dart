@@ -66,7 +66,7 @@ class _RegisterFormState extends State<RegisterForm> {
   }
 
   void _submitForm() {
-    if (_formKey.currentState!.validate()) {
+    if (_formKey.currentState!.validate() && carImage != null) {
       final userState = context.read<AppUserCubit>().state;
       if (userState is AppUserLoggedIn) {
         final price = double.tryParse(pricePerDayController.text.trim());
@@ -85,7 +85,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 carName: carNameController.text.trim(),
                 carNumber: carNumberController.text.trim(),
                 pricePerDay: price,
-                carImage: carImage,
+                carImage: carImage!,
                 ownerId: userState.user.id,
               ),
             );

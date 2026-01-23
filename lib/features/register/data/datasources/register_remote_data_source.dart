@@ -10,7 +10,7 @@ abstract interface class RegisterRemoteDataSource {
     required String carName,
     required String carNumber,
     required double pricePerDay,
-    File? carImage,
+    required File carImage,
     required String ownerId,
   });
 
@@ -30,9 +30,9 @@ class RegistorRemoteDataSourceImpl implements RegisterRemoteDataSource {
   final FirebaseStorage fireStorage;
 
   RegistorRemoteDataSourceImpl(
-    this.fireStore,
-    this.fireStorage,
-  );
+      this.fireStore,
+      this.fireStorage,
+      );
 
   @override
   Future<CarDetailsModel> registerCarDetails({
@@ -40,17 +40,13 @@ class RegistorRemoteDataSourceImpl implements RegisterRemoteDataSource {
     required String carName,
     required String carNumber,
     required double pricePerDay,
-    File? carImage,
+    required File carImage,
     required String ownerId,
   }) async {
     try {
-      String carImageUrl = 'https://via.placeholder.com/400x300.png?text=No+Image';
-      
-      if (carImage != null) {
-        final ref = fireStorage.ref().child('car_images/$carNumber.jpg');
-        final uploadTask = await ref.putFile(carImage);
-        carImageUrl = await uploadTask.ref.getDownloadURL();
-      }
+      final ref = fireStorage.ref().child('car_images/$carNumber.jpg');
+      final uploadTask = await ref.putFile(carImage);
+      final carImageUrl = await uploadTask.ref.getDownloadURL();
 
       final carDetails = CarDetailsModel(
         location: location,
