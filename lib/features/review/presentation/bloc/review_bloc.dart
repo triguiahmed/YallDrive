@@ -6,6 +6,7 @@ import 'package:yaladrive/features/review/domain/usecases/delete_review.dart';
 import 'package:yaladrive/features/review/domain/usecases/get_average_rating_for_car.dart';
 import 'package:yaladrive/features/review/domain/usecases/get_reviews_by_user.dart';
 import 'package:yaladrive/features/review/domain/usecases/get_reviews_for_car.dart';
+import 'package:yaladrive/features/review/domain/usecases/get_reviews_for_cars.dart';
 import 'package:yaladrive/features/review/domain/usecases/update_review.dart';
 
 part 'review_event.dart';
@@ -14,6 +15,7 @@ part 'review_state.dart';
 class ReviewBloc extends Bloc<ReviewEvent, ReviewState> {
   final CreateReview _createReview;
   final GetReviewsForCar _getReviewsForCar;
+  final GetReviewsForCars _getReviewsForCars;
   final GetReviewsByUser _getReviewsByUser;
   final UpdateReview _updateReview;
   final DeleteReview _deleteReview;
@@ -22,12 +24,14 @@ class ReviewBloc extends Bloc<ReviewEvent, ReviewState> {
   ReviewBloc({
     required CreateReview createReview,
     required GetReviewsForCar getReviewsForCar,
+    required GetReviewsForCars getReviewsForCars,
     required GetReviewsByUser getReviewsByUser,
     required UpdateReview updateReview,
     required DeleteReview deleteReview,
     required GetAverageRatingForCar getAverageRatingForCar,
   })  : _createReview = createReview,
         _getReviewsForCar = getReviewsForCar,
+        _getReviewsForCars = getReviewsForCars,
         _getReviewsByUser = getReviewsByUser,
         _updateReview = updateReview,
         _deleteReview = deleteReview,
@@ -35,6 +39,7 @@ class ReviewBloc extends Bloc<ReviewEvent, ReviewState> {
         super(ReviewInitial()) {
     on<CreateReviewEvent>(_onCreateReview);
     on<GetReviewsForCarEvent>(_onGetReviewsForCar);
+    on<GetReviewsForCarsEvent>(_onGetReviewsForCars);
     on<GetReviewsByUserEvent>(_onGetReviewsByUser);
     on<UpdateReviewEvent>(_onUpdateReview);
     on<DeleteReviewEvent>(_onDeleteReview);
@@ -70,6 +75,22 @@ class ReviewBloc extends Bloc<ReviewEvent, ReviewState> {
 
     final result = await _getReviewsForCar(
       GetReviewsForCarParams(carNo: event.carNo),
+    );
+
+    result.fold(
+      (failure) => emit(ReviewError(message: failure.message)),
+      (reviews) => emit(ReviewsLoaded(reviews: reviews)),
+    );
+  }
+
+  Future<void> _onGetReviewsForCars(
+    GetReviewsForCarsEvent event,
+    Emitter<ReviewState> emit,
+  ) async {
+    emit(ReviewLoading());
+
+    final result = await _getReviewsForCars(
+      GetReviewsForCarsParams(carNos: event.carNos),
     );
 
     result.fold(

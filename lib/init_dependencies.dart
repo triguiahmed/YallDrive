@@ -59,6 +59,7 @@ import 'package:yaladrive/features/review/domain/usecases/delete_review.dart';
 import 'package:yaladrive/features/review/domain/usecases/get_average_rating_for_car.dart';
 import 'package:yaladrive/features/review/domain/usecases/get_reviews_by_user.dart';
 import 'package:yaladrive/features/review/domain/usecases/get_reviews_for_car.dart';
+import 'package:yaladrive/features/review/domain/usecases/get_reviews_for_cars.dart';
 import 'package:yaladrive/features/review/domain/usecases/update_review.dart';
 import 'package:yaladrive/features/review/presentation/bloc/review_bloc.dart';
 import 'package:yaladrive/features/splash/domain/usecases/usecases.dart';

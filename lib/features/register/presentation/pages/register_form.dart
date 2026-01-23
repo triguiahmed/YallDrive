@@ -228,7 +228,7 @@ class _RegisterFormState extends State<RegisterForm> {
                                     ),
                                     SizedBox(height: 15),
                                     Text(
-                                      'Select your image',
+                                      'Select your image (Optional)',
                                       style: TextStyle(
                                         fontSize: 15,
                                         color: Colors.grey,

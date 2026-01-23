@@ -18,6 +18,10 @@ abstract interface class ReviewRemoteDataSource {
     required String carNo,
   });
 
+  Future<List<ReviewModel>> getReviewsForCars({
+    required List<String> carNos,
+  });
+
   Future<List<ReviewModel>> getReviewsByUser({
     required String userId,
   });
@@ -145,6 +149,38 @@ class ReviewRemoteDataSourceImpl implements ReviewRemoteDataSource {
           .toList();
     } catch (e) {
       throw ServerException('Failed to get reviews for car: $e');
+    }
+  }
+
+  @override
+  Future<List<ReviewModel>> getReviewsForCars({
+    required List<String> carNos,
+  }) async {
+    try {
+      if (carNos.isEmpty) return [];
+
+      List<ReviewModel> allReviews = [];
+
+      // Process in chunks of 10 for 'whereIn' query
+      for (var i = 0; i < carNos.length; i += 10) {
+        var end = (i + 10 < carNos.length) ? i + 10 : carNos.length;
+        var chunk = carNos.sublist(i, end);
+
+        final snapshot = await _reviewsCollection
+            .where('carNo', whereIn: chunk)
+            .orderBy('createdAt', descending: true)
+            .get();
+
+        allReviews
+            .addAll(snapshot.docs.map((doc) => ReviewModel.fromJson(doc.data())));
+      }
+
+      // Sort combined results
+      allReviews.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+
+      return allReviews;
+    } catch (e) {
+      throw ServerException('Failed to get reviews for cars: $e');
     }
   }
 

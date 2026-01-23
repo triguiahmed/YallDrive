@@ -6,6 +6,7 @@ import 'package:yaladrive/core/utils/show_snackerbar.dart';
 import 'package:yaladrive/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:yaladrive/features/profile/presentation/pages/owner/owner.dart';
 import 'package:yaladrive/features/profile/presentation/pages/scaffold_page.dart';
+import 'package:yaladrive/features/review/presentation/bloc/review_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -32,7 +33,7 @@ class _OwnerHomeState extends State<OwnerHome> {
 
   @override
   Widget build(BuildContext context) {
-    final dummyFeedbacks = [
+    /*final dummyFeedbacks = [
       {
         'text': 'Great service! The car was in excellent condition.',
         'author': 'Ahmed M.',
@@ -53,7 +54,7 @@ class _OwnerHomeState extends State<OwnerHome> {
         'author': 'Leila B.',
         'rating': 5,
       },
-    ];
+    ];*/
 
     return ScaffoldPage(
       title: 'Welcome to YallaDrive',
@@ -64,6 +65,12 @@ class _OwnerHomeState extends State<OwnerHome> {
         listener: (context, state) {
           if (state is ProfileFailure) {
             showSnackerbar(context, state.message);
+          }
+           if (state is ProfileOwnerCarsSuccess) {
+            final carNos = state.cars.map((c) => c.carNumber).toList();
+            context
+                .read<ReviewBloc>()
+                .add(GetReviewsForCarsEvent(carNos: carNos));
           }
         },
         builder: (context, state) {
@@ -218,88 +225,112 @@ class _OwnerHomeState extends State<OwnerHome> {
                   
                   // Feedbacks List
                   Expanded(
-                    child: ListView.builder(
-                      itemCount: dummyFeedbacks.length,
-                      itemBuilder: (context, index) {
-                        final feedback = dummyFeedbacks[index];
-                        return Container(
-                          margin: EdgeInsets.only(bottom: 16),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(16),
-                            border: Border.all(
-                              color: AppPallete.gradient3.withOpacity(0.2),
-                              width: 1,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: AppPallete.gradient3.withOpacity(0.08),
-                                blurRadius: 10,
-                                offset: Offset(0, 4),
-                              ),
-                            ],
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.all(18.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    CircleAvatar(
-                                      backgroundColor: AppPallete.gradient3.withOpacity(0.1),
-                                      child: Text(
-                                        feedback['author'].toString()[0],
-                                        style: TextStyle(
-                                          color: AppPallete.gradient3,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
+                    child: BlocBuilder<ReviewBloc, ReviewState>(
+                      builder: (context, state) {
+                        if (state is ReviewLoading) {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        } else if (state is ReviewError) {
+                          return Center(child: Text(state.message));
+                        } else if (state is ReviewsLoaded) {
+                          if (state.reviews.isEmpty) {
+                            return const Center(child: Text('No reviews yet.'));
+                          }
+                          return ListView.builder(
+                            itemCount: state.reviews.length,
+                            itemBuilder: (context, index) {
+                              final review = state.reviews[index];
+                              // Use generic "User" as name since we don't have it in Review entity
+                              const authorName = "YallaDrive User";
+
+                              return Container(
+                                margin: EdgeInsets.only(bottom: 16),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(16),
+                                  border: Border.all(
+                                    color: AppPallete.gradient3
+                                        .withOpacity(0.2),
+                                    width: 1,
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: AppPallete.gradient3
+                                          .withOpacity(0.08),
+                                      blurRadius: 10,
+                                      offset: Offset(0, 4),
                                     ),
-                                    SizedBox(width: 12),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                  ],
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.all(18.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
                                         children: [
-                                          Text(
-                                            feedback['author'].toString(),
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.black87,
+                                          CircleAvatar(
+                                            backgroundColor: AppPallete
+                                                .gradient3
+                                                .withOpacity(0.1),
+                                            child: Text(
+                                              authorName[0],
+                                              style: TextStyle(
+                                                color: AppPallete.gradient3,
+                                                fontWeight: FontWeight.bold,
+                                              ),
                                             ),
                                           ),
-                                          SizedBox(height: 4),
-                                          Row(
-                                            children: List.generate(
-                                              5,
-                                              (starIndex) => Icon(
-                                                starIndex < (feedback['rating'] as int)
-                                                    ? Icons.star
-                                                    : Icons.star_border,
-                                                color: Colors.amber,
-                                                size: 18,
-                                              ),
+                                          SizedBox(width: 12),
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  authorName,
+                                                  style: TextStyle(
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black87,
+                                                  ),
+                                                ),
+                                                SizedBox(height: 4),
+                                                Row(
+                                                  children: List.generate(
+                                                    5,
+                                                    (starIndex) => Icon(
+                                                      starIndex < review.rating
+                                                          ? Icons.star
+                                                          : Icons.star_border,
+                                                      color: Colors.amber,
+                                                      size: 18,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
                                         ],
                                       ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 12),
-                                Text(
-                                  feedback['text'].toString(),
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.black87,
-                                    height: 1.4,
+                                      SizedBox(height: 12),
+                                      Text(
+                                        review.comment,
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          color: Colors.black87,
+                                          height: 1.4,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
-                        );
+                              );
+                            },
+                          );
+                        }
+                        return const SizedBox();
                       },
                     ),
                   ),

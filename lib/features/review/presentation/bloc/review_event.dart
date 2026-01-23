@@ -25,6 +25,14 @@ final class GetReviewsForCarEvent extends ReviewEvent {
   });
 }
 
+final class GetReviewsForCarsEvent extends ReviewEvent {
+  final List<String> carNos;
+
+  GetReviewsForCarsEvent({
+    required this.carNos,
+  });
+}
+
 final class GetReviewsByUserEvent extends ReviewEvent {
   final String userId;
 
