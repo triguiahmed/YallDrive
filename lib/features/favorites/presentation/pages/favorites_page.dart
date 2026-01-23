@@ -84,11 +84,13 @@ class _FavoritesPageState extends State<FavoritesPage> {
             _favorites = state.favorites;
             _loadCarDetails(state.favorites);
           } else if (state is FavoriteRemoved) {
-            utils.showSnackerbar(context, 'Removed from favorites');
+            utils.showSnackerbar(context, 'Removed from favorites',
+                title: "Success");
             _loadFavorites();
           } else if (state is FavoriteToggled) {
             if (!state.isFavorited) {
-              utils.showSnackerbar(context, 'Removed from favorites');
+              utils.showSnackerbar(context, 'Removed from favorites',
+                  title: "Success");
             }
             _loadFavorites();
           }
@@ -127,7 +129,11 @@ class _FavoritesPageState extends State<FavoritesPage> {
                   ),
                   const SizedBox(height: 24),
                   ElevatedButton.icon(
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: () => Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      AppRoutes.customerHome,
+                      (route) => false,
+                    ),
                     icon: const Icon(Icons.search),
                     label: const Text('Browse Cars'),
                     style: ElevatedButton.styleFrom(
@@ -156,7 +162,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                 return FavoriteCarCard(
                   favorite: favorite,
                   carName: carData?['carName'],
-                  carImageUrl: carData?['carUrl'],
+                  carImageUrl: carData?['carImage'],
                   pricePerDay: carData?['pricePerDay']?.toDouble(),
                   location: carData?['location'],
                   onTap: () => _navigateToCarDetails(favorite.carNo),
