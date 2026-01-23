@@ -150,7 +150,7 @@ class _LiveChatScreenState extends State<LiveChatScreen> {
   final List<ChatMessage> _messages = [];
   bool _isLoading = false;
 
-  static const String _groqApiKey = "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";
+  static const String _groqApiKey = "";
   static const String _groqApiUrl =
       "https://api.groq.com/openai/v1/chat/completions";
 
