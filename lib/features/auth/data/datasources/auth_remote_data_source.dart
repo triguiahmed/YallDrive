@@ -59,6 +59,13 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
       final user = response.user;
       if (user != null) {
+        final String? fcmToken = await fireMessaging.getToken();
+        if (fcmToken != null) {
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(user.uid)
+              .update({'fcmtoken': fcmToken});
+        }
         final userDoc = await FirebaseFirestore.instance
             .collection('users')
             .doc(user.uid)
@@ -70,7 +77,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
           'name': user.displayName ?? '',
           'role': userDoc.data()?['role'] ?? 'CUSTOMER',
           'createdAt': userDoc.data()?['createdAt'] ?? Timestamp.now(),
-          'fcmtoken': userDoc.data()?['fcmtoken'] ?? '',
+          'fcmtoken': fcmToken ?? userDoc.data()?['fcmtoken'] ?? '',
         });
       } else {
         throw ServerException('User is null');

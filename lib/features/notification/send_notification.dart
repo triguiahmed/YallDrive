@@ -9,6 +9,11 @@ Future<void> sendPushNotification(
   String title,
 ) async {
   try {
+    if (AppSecrets.googleAPI.isEmpty) {
+      debugPrint("⚠️ Google API Key is missing. Notification not sent.");
+      return;
+    }
+
     final url = Uri.parse('https://fcm.googleapis.com/fcm/send');
 
     await http.post(

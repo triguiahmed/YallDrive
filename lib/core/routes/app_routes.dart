@@ -1,7 +1,9 @@
 import 'package:yaladrive/features/auth/presentation/pages/login_page.dart';
 import 'package:yaladrive/features/auth/presentation/pages/sign_up_page.dart';
 import 'package:yaladrive/features/booking/presentation/pages/booking_home.dart';
+import 'package:yaladrive/features/favorites/presentation/pages/favorites_page.dart';
 import 'package:yaladrive/features/payment/payment.dart';
+import 'package:yaladrive/features/payment/presentation/pages/payment_history_page.dart';
 import 'package:yaladrive/features/profile/presentation/pages/customer/customer_booking.dart';
 import 'package:yaladrive/features/profile/presentation/pages/customer/customer_help.dart';
 import 'package:yaladrive/features/profile/presentation/pages/customer/customer_home.dart';
@@ -16,6 +18,7 @@ import 'package:yaladrive/features/register/presentation/pages/car_detail.dart';
 import 'package:yaladrive/features/register/presentation/pages/get_cars.dart';
 import 'package:yaladrive/features/register/presentation/pages/register_form.dart';
 import 'package:yaladrive/features/register/presentation/pages/register_home.dart';
+import 'package:yaladrive/features/review/presentation/pages/car_reviews_page.dart';
 import 'package:yaladrive/features/splash/presentation/pages/home_page.dart';
 import 'package:yaladrive/features/splash/presentation/pages/no_internet_page.dart';
 import 'package:yaladrive/features/splash/presentation/pages/splash.dart';
@@ -56,6 +59,13 @@ class AppRoutes {
 
   // Payment
   static const String payment = 'payment/home';
+  static const String paymentHistory = 'payment/history';
+
+  // Reviews
+  static const String carReviews = 'reviews/car';
+
+  // Favorites
+  static const String favorites = 'favorites/home';
 
   static Map<String, WidgetBuilder> getRoutes(BuildContext context) {
     return {

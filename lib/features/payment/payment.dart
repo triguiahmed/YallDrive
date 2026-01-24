@@ -3,10 +3,13 @@ import 'package:yaladrive/core/constants/constants.dart';
 import 'package:yaladrive/core/routes/app_routes.dart';
 import 'package:yaladrive/features/booking/domain/entites/booking.dart';
 import 'package:yaladrive/features/booking/presentation/bloc/booking_bloc.dart';
+import 'package:yaladrive/features/payment/domain/entities/payment.dart';
+import 'package:yaladrive/features/payment/presentation/bloc/payment_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'dart:async';
+import 'dart:math';
 
 class PaymentScreen extends StatefulWidget {
   const PaymentScreen({
@@ -22,7 +25,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
   bool _showPaymentForm = false;
   String? _animationFile;
   Booking? booking;
-  
+
   final _cardNumberController = TextEditingController();
   final _expiryController = TextEditingController();
   final _cvvController = TextEditingController();
@@ -32,7 +35,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     final args =
-        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+    ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
     if (args != null && booking == null) {
       booking = args['booking'];
       // Show payment form after a brief delay
@@ -57,7 +60,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
       Navigator.pushNamedAndRemoveUntil(
         context,
         AppRoutes.customerBooking,
-        (route) => false,
+            (route) => false,
       );
     }
   }
@@ -72,9 +75,19 @@ class _PaymentScreenState extends State<PaymentScreen> {
     });
 
     context.read<BookingBloc>().add(
-          PaymentApproveEvent(
+      PaymentApproveEvent(
+        bookingId: booking!.id,
+        paymentStatus: 'Paid',
+      ),
+    );
+
+    context.read<PaymentBloc>().add(
+          CreatePaymentEvent(
             bookingId: booking!.id,
-            paymentStatus: 'Paid',
+            userId: booking!.userId,
+            amount: booking!.price,
+            method: PaymentMethod.card,
+            status: PaymentStatus.paid,
           ),
         );
 
@@ -96,9 +109,19 @@ class _PaymentScreenState extends State<PaymentScreen> {
     });
 
     context.read<BookingBloc>().add(
-          PaymentApproveEvent(
+      PaymentApproveEvent(
+        bookingId: booking!.id,
+        paymentStatus: 'Failed',
+      ),
+    );
+
+    context.read<PaymentBloc>().add(
+          CreatePaymentEvent(
             bookingId: booking!.id,
-            paymentStatus: 'Failed',
+            userId: booking!.userId,
+            amount: booking!.price,
+            method: PaymentMethod.card,
+            status: PaymentStatus.failed,
           ),
         );
 
@@ -123,9 +146,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
     if (!mounted) return;
 
-    // Simulate random success/failure for educational purposes
+    // Simulate 99% success rate for educational purposes
     // In production, this would be an actual API call
-    final success = DateTime.now().second % 3 != 0; // ~66% success rate
+    final random = Random();
+    final success = random.nextInt(100) < 99; // 99% success rate
 
     if (success) {
       _handlePaymentSuccess();
@@ -141,11 +165,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
     if (!_isProcessing && booking != null) {
       context.read<BookingBloc>().add(
-            PaymentApproveEvent(
-              bookingId: booking!.id,
-              paymentStatus: 'Cancelled',
-            ),
-          );
+        PaymentApproveEvent(
+          bookingId: booking!.id,
+          paymentStatus: 'Cancelled',
+        ),
+      );
     }
     return true;
   }
@@ -160,25 +184,25 @@ class _PaymentScreenState extends State<PaymentScreen> {
           leading: _isProcessing
               ? const SizedBox.shrink()
               : IconButton(
-                  icon: const Icon(Icons.arrow_back),
-                  onPressed: () async {
-                    bool canPop = await _onWillPop();
-                    if (canPop && mounted) {
-                      Navigator.pop(context);
-                    }
-                  },
-                ),
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () async {
+              bool canPop = await _onWillPop();
+              if (canPop && mounted) {
+                Navigator.pop(context);
+              }
+            },
+          ),
         ),
         body: SafeArea(
           child: _isProcessing
               ? Center(
-                  child: _animationFile != null
-                      ? Lottie.asset(_animationFile!)
-                      : const Loader(),
-                )
+            child: _animationFile != null
+                ? Lottie.asset(_animationFile!)
+                : const Loader(),
+          )
               : _showPaymentForm
-                  ? _buildPaymentForm()
-                  : const Center(child: Loader()),
+              ? _buildPaymentForm()
+              : const Center(child: Loader()),
         ),
       ),
     );

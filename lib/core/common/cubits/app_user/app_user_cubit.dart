@@ -5,6 +5,7 @@ import 'package:yaladrive/core/common/entities/user.dart';
 import 'package:yaladrive/core/error/exception.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
@@ -13,9 +14,13 @@ part 'app_user_state.dart';
 class AppUserCubit extends Cubit<AppUserState> {
   final auth.FirebaseAuth _auth;
   final FirebaseFirestore _firestore;
+  // ignore: unused_field
+  final FirebaseMessaging? _messaging;
   late final StreamSubscription<auth.User?> _authSubscription;
 
-  AppUserCubit(this._auth, this._firestore) : super(AppUserInitial()) {
+  AppUserCubit(this._auth, this._firestore, {FirebaseMessaging? messaging})
+      : _messaging = messaging,
+        super(AppUserInitial()) {
     _authSubscription =
         _auth.authStateChanges().listen((auth.User? user) async {
       if (user == null) {
@@ -27,6 +32,20 @@ class AppUserCubit extends Cubit<AppUserState> {
   }
 
   Future<void> _loadUser(auth.User user) async {
+    if (_messaging != null) {
+      try {
+        final token = await _messaging!.getToken();
+        if (token != null) {
+          await _firestore
+              .collection('users')
+              .doc(user.uid)
+              .update({'fcmtoken': token});
+        }
+      } catch (e) {
+        debugPrint("Failed to update FCM token on load: $e");
+      }
+    }
+
     final doc = await _firestore.collection('users').doc(user.uid).get();
     if (doc.exists) {
       final data = doc.data()!;

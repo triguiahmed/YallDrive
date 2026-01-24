@@ -10,6 +10,7 @@ Future<void> initDependencies() async {
     () => AppUserCubit(
       serviceLocator(),
       serviceLocator(),
+      messaging: serviceLocator(),
     ),
   );
 
@@ -18,6 +19,9 @@ Future<void> initDependencies() async {
   _initProfile();
   _initRegister();
   _initBooking();
+  _initReview();
+  _initPayment();
+  _initFavorites();
 }
 
 Future<void> _initFirebase() async {
@@ -45,52 +49,12 @@ Future<void> _initFirebase() async {
     () => firebaseMessaging,
   );
 
-  await _initializeFirebaseMessaging();
-}
-
-Future<void> _initializeFirebaseMessaging() async {
-  final messaging = serviceLocator<FirebaseMessaging>();
-
-  // Request notification permissions
-  NotificationSettings settings = await messaging.requestPermission(
-    alert: true,
-    badge: true,
-    sound: true,
+  // Notification Service
+  serviceLocator.registerLazySingleton<NotificationService>(
+    () => NotificationService(serviceLocator()),
   );
 
-  if (settings.authorizationStatus == AuthorizationStatus.denied) {
-    debugPrint("❌ User denied push notifications.");
-    return;
-  }
-
-  // Retrieve FCM Token
-  String? fcmToken = await messaging.getToken();
-  if (fcmToken != null) {
-    debugPrint("✅ FCM Token: $fcmToken");
-    // Send this token to your backend for user-device mapping
-  } else {
-    debugPrint("⚠️ Failed to get FCM Token");
-  }
-
-  // subcribe
-  messaging.subscribeToTopic('user');
-
-  // Handle foreground notifications
-  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    debugPrint("📩 Foreground Notification: ${message.notification?.title}");
-  });
-
-  // Handle when app is opened via notification
-  FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-    debugPrint("🔄 App opened from notification.");
-  });
-
-  // Handle when app is launched from a notification
-  RemoteMessage? initialMessage = await messaging.getInitialMessage();
-  if (initialMessage != null) {
-    debugPrint(
-        "🚀 App launched from notification: ${initialMessage.notification?.title}");
-  }
+  await serviceLocator<NotificationService>().initialize();
 }
 
 Future<void> _initHive() async {
@@ -296,3 +260,166 @@ void _initBooking() {
       ),
     );
 }
+
+void _initReview() {
+  serviceLocator
+    ..registerFactory<ReviewRemoteDataSource>(
+      () => ReviewRemoteDataSourceImpl(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory<ReviewRepository>(
+      () => ReviewRepositoryImpl(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory<CreateReview>(
+      () => CreateReview(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory<GetReviewsForCar>(
+      () => GetReviewsForCar(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory<GetReviewsForCars>(
+      () => GetReviewsForCars(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory<GetReviewsByUser>(
+      () => GetReviewsByUser(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory<UpdateReview>(
+      () => UpdateReview(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory<DeleteReview>(
+      () => DeleteReview(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory<GetAverageRatingForCar>(
+      () => GetAverageRatingForCar(
+        serviceLocator(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => ReviewBloc(
+        createReview: serviceLocator(),
+        getReviewsForCar: serviceLocator(),
+        getReviewsForCars: serviceLocator(),
+        getReviewsByUser: serviceLocator(),
+        updateReview: serviceLocator(),
+        deleteReview: serviceLocator(),
+        getAverageRatingForCar: serviceLocator(),
+      ),
+    );
+}
+
+void _initPayment() {
+  serviceLocator
+    ..registerFactory<PaymentRemoteDataSource>(
+      () => PaymentRemoteDataSourceImpl(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory<PaymentRepository>(
+      () => PaymentRepositoryImpl(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory<CreatePayment>(
+      () => CreatePayment(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory<GetPaymentForBooking>(
+      () => GetPaymentForBooking(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory<GetPaymentsByUser>(
+      () => GetPaymentsByUser(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory<UpdatePaymentStatus>(
+      () => UpdatePaymentStatus(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory<DeletePayment>(
+      () => DeletePayment(
+        serviceLocator(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => PaymentBloc(
+        createPayment: serviceLocator(),
+        getPaymentForBooking: serviceLocator(),
+        getPaymentsByUser: serviceLocator(),
+        updatePaymentStatus: serviceLocator(),
+        deletePayment: serviceLocator(),
+      ),
+    );
+}
+
+void _initFavorites() {
+  serviceLocator
+    ..registerFactory<FavoritesRemoteDataSource>(
+      () => FavoritesRemoteDataSourceImpl(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory<FavoritesRepository>(
+      () => FavoritesRepositoryImpl(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory<AddFavorite>(
+      () => AddFavorite(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory<RemoveFavorite>(
+      () => RemoveFavorite(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory<GetFavoritesByUser>(
+      () => GetFavoritesByUser(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory<IsCarFavorited>(
+      () => IsCarFavorited(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory<ToggleFavorite>(
+      () => ToggleFavorite(
+        serviceLocator(),
+      ),
+    )
+    ..registerFactory<GetFavoriteCountForCar>(
+      () => GetFavoriteCountForCar(
+        serviceLocator(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => FavoritesBloc(
+        addFavorite: serviceLocator(),
+        removeFavorite: serviceLocator(),
+        getFavoritesByUser: serviceLocator(),
+        isCarFavorited: serviceLocator(),
+        toggleFavorite: serviceLocator(),
+        getFavoriteCountForCar: serviceLocator(),
+      ),
+    );
+}
+

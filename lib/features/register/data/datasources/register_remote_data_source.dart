@@ -30,9 +30,9 @@ class RegistorRemoteDataSourceImpl implements RegisterRemoteDataSource {
   final FirebaseStorage fireStorage;
 
   RegistorRemoteDataSourceImpl(
-    this.fireStore,
-    this.fireStorage,
-  );
+      this.fireStore,
+      this.fireStorage,
+      );
 
   @override
   Future<CarDetailsModel> registerCarDetails({

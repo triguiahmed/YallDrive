@@ -93,7 +93,7 @@ class _RegisterFormState extends State<RegisterForm> {
         showSnackerbar(context, 'User is not logged in');
       }
     } else {
-      showSnackerbar(context, 'Please fill all fields and select an image');
+      showSnackerbar(context, 'Please fill all required fields');
     }
   }
 
@@ -228,7 +228,7 @@ class _RegisterFormState extends State<RegisterForm> {
                                     ),
                                     SizedBox(height: 15),
                                     Text(
-                                      'Select your image',
+                                      'Select your image (Optional)',
                                       style: TextStyle(
                                         fontSize: 15,
                                         color: Colors.grey,

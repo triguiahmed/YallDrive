@@ -1,5 +1,7 @@
 import 'package:yaladrive/core/common/cubits/app_user/app_user_cubit.dart';
 import 'package:yaladrive/core/routes/app_routes.dart';
+import 'package:yaladrive/features/favorites/presentation/pages/favorites_page.dart';
+import 'package:yaladrive/features/payment/presentation/pages/payment_history_page.dart';
 import 'package:yaladrive/features/profile/presentation/widgets/menu_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,8 +11,37 @@ class MenuOption extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userState = context.read<AppUserCubit>().state;
+    final userId = userState is AppUserLoggedIn ? userState.user.id : null;
+
     return Column(
       children: [
+        MenuItem(
+            icon: Icons.favorite,
+            title: "My Favorites",
+            onTap: () {
+              if (userId != null) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => FavoritesPage(userId: userId),
+                  ),
+                );
+              }
+            }),
+        MenuItem(
+            icon: Icons.payment,
+            title: "Payment History",
+            onTap: () {
+              if (userId != null) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PaymentHistoryPage(userId: userId),
+                  ),
+                );
+              }
+            }),
         MenuItem(
             icon: Icons.support_agent,
             title: "Contact Support",

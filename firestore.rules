@@ -1,0 +1,125 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    function isValidRating(rating) {
+      return rating >= 1 && rating <= 5;
+    }
+    
+    function isValidPaymentMethod(method) {
+      return method in ['card', 'wallet', 'cash'];
+    }
+    
+    function isValidPaymentStatus(status) {
+      return status in ['pending', 'paid', 'failed'];
+    }
+    
+    function isValidStatusTransition(currentStatus, newStatus) {
+      return (currentStatus == 'pending' && newStatus in ['paid', 'failed']) ||
+             (currentStatus == 'failed' && newStatus == 'pending');
+    }
+    
+    // Users collection
+    match /users/{userId} {
+      allow read: if isAuthenticated();
+      allow create: if isOwner(userId);
+      allow update, delete: if isOwner(userId);
+    }
+    
+    // Cars collection
+    match /cars/{carId} {
+      allow read: if isAuthenticated();
+      allow create, update, delete: if isAuthenticated();
+    }
+    
+    // Bookings collection
+    match /bookings/{bookingId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated() && 
+                       request.resource.data.userId == request.auth.uid;
+      allow update: if isAuthenticated() && 
+                       (resource.data.userId == request.auth.uid || 
+                        resource.data.ownerId == request.auth.uid);
+      allow delete: if isAuthenticated() && 
+                       resource.data.userId == request.auth.uid;
+    }
+    
+    // Reviews collection
+    match /reviews/{reviewId} {
+      // Anyone authenticated can read reviews
+      allow read: if isAuthenticated();
+      
+      // Users can create reviews for cars they haven't reviewed yet
+      // Rating must be between 1-5
+      allow create: if isAuthenticated() && 
+                       request.resource.data.userId == request.auth.uid &&
+                       isValidRating(request.resource.data.rating);
+      
+      // Users can only update their own reviews
+      // Rating must remain valid (1-5)
+      allow update: if isAuthenticated() && 
+                       resource.data.userId == request.auth.uid &&
+                       request.resource.data.userId == resource.data.userId &&
+                       isValidRating(request.resource.data.rating);
+      
+      // Users can only delete their own reviews
+      allow delete: if isAuthenticated() && 
+                       resource.data.userId == request.auth.uid;
+    }
+    
+    // Payments collection
+    match /payments/{paymentId} {
+      // Users can read their own payments
+      allow read: if isAuthenticated() && 
+                     resource.data.userId == request.auth.uid;
+      
+      // Users can create payments for their own bookings
+      // Payment method must be valid
+      allow create: if isAuthenticated() && 
+                       request.resource.data.userId == request.auth.uid &&
+                       isValidPaymentMethod(request.resource.data.method) &&
+                       isValidPaymentStatus(request.resource.data.status);
+      
+      // Users can update their own payments
+      // Status transitions must be valid
+      allow update: if isAuthenticated() && 
+                       resource.data.userId == request.auth.uid &&
+                       request.resource.data.userId == resource.data.userId &&
+                       isValidPaymentStatus(request.resource.data.status) &&
+                       (resource.data.status == request.resource.data.status || 
+                        isValidStatusTransition(resource.data.status, request.resource.data.status));
+      
+      // Users can only delete pending payments
+      allow delete: if isAuthenticated() && 
+                       resource.data.userId == request.auth.uid &&
+                       resource.data.status == 'pending';
+    }
+    
+    // Favorites collection
+    match /favorites/{favoriteId} {
+      // Users can read their own favorites
+      allow read: if isAuthenticated() && 
+                     resource.data.userId == request.auth.uid;
+      
+      // Users can create their own favorites
+      allow create: if isAuthenticated() && 
+                       request.resource.data.userId == request.auth.uid;
+      
+      // Users can only delete their own favorites
+      allow delete: if isAuthenticated() && 
+                       resource.data.userId == request.auth.uid;
+      
+      // Favorites should not be updated (only create/delete)
+      allow update: if false;
+    }
+  }
+}
